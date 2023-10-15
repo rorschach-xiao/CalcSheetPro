@@ -540,12 +540,14 @@ describe("FormulaEvaluator", () => {
     describe("when the formula is 1 + Rand  ", () => {
       it("returns the number 0.25", () => {
         const formula = ["1", "+", "Rand"];
-        recalc.evaluate(formula);
-        let result = recalc.result;
-        let error = recalc.error;
-        expect(result).toBeLessThanOrEqual(2);
-        expect(result).toBeGreaterThanOrEqual(1);
-        expect(error).toEqual("");
+        for(let i = 0; i<10000;i++){
+          recalc.evaluate(formula);
+          let result = recalc.result;
+          let error = recalc.error;
+          expect(result).toBeLessThanOrEqual(2);
+          expect(result).toBeGreaterThanOrEqual(1);
+          expect(error).toEqual("");
+        }
       });
       
     });
