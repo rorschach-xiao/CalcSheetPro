@@ -437,7 +437,7 @@ describe("FormulaEvaluator", () => {
       
     describe("when the formula is 8 cuberoot' ", () => {
       it("returns the number 2", () => {
-        const formula = ["8", "cuberoot"];
+        const formula = ["8", "cbrt"];
         
         recalc.evaluate(formula);
         

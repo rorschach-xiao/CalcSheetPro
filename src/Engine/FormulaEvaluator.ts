@@ -218,7 +218,7 @@ export class FormulaEvaluator {
   private postfixHandler(result: number): number {
     let newResult = result;
     const postfixOperatorSet = new Set(["+/-", "cos", "sin", "tan", "asin", "acos", "atan",
-                                        "sqrt", "cuberoot", "sqr", "cube", "1/x"]);
+                                        "sqrt", "cbrt", "sqr", "cube", "1/x"]);
     while (postfixOperatorSet.has(this._currentFormula[0])) {
       const currentPostfixOp = this._currentFormula.shift();
       switch(currentPostfixOp) {
@@ -246,7 +246,7 @@ export class FormulaEvaluator {
         case "sqrt":
           newResult = Math.sqrt(newResult);
           break;
-        case "cuberoot":
+        case "cbrt":
           newResult = Math.cbrt(newResult);
           break;
         case "sqr":
