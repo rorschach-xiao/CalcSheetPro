@@ -525,7 +525,7 @@ describe("FormulaEvaluator", () => {
       
     });
 
-    describe("when the formula is ( 1 + 1 ) sqr sqr sqr * 9 ", () => {
+    describe("when the formula is 1 1/x ", () => {
       it("returns the number 0.25", () => {
         const formula = ["0", "1/x"];
         recalc.evaluate(formula);
@@ -533,6 +533,19 @@ describe("FormulaEvaluator", () => {
         let error = recalc.error;
         expect(result).toEqual(Infinity);
         expect(error).toEqual("#DIV/0!");
+      });
+      
+    });
+
+    describe("when the formula is 1 + Rand  ", () => {
+      it("returns the number 0.25", () => {
+        const formula = ["1", "+", "Rand"];
+        recalc.evaluate(formula);
+        let result = recalc.result;
+        let error = recalc.error;
+        expect(result).toBeLessThanOrEqual(2);
+        expect(result).toBeGreaterThanOrEqual(1);
+        expect(error).toEqual("");
       });
       
     });
