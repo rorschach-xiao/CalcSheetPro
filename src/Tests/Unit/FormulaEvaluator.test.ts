@@ -552,5 +552,34 @@ describe("FormulaEvaluator", () => {
       
     });
 
+    describe("when the formula is (Pi / 4) tan' ", () => {
+      it("returns the numbe 0", () => {
+        const formula = ["(", "Pi", "/", "4", ")", "tan"];
+        
+        recalc.evaluate(formula);
+        
+        let result = recalc.result;
+        let error = recalc.error;
+        let delta = Math.abs(result - 1);
+        expect(delta).toBeLessThan(0.000000000000001);
+        expect(error).toEqual("");
+      });
+    })
+
+    describe("when the formula is e ", () => {
+      it("returns the numbe 0", () => {
+        const formula = ["e"];
+        
+        recalc.evaluate(formula);
+        
+        let result = recalc.result;
+        let error = recalc.error;
+        let delta = Math.abs(result - 2.71828183);
+        expect(delta).toBeLessThan(0.00000001);
+        expect(error).toEqual("");
+      });
+    })
+
+
   });
 });
