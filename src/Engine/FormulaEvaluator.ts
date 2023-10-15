@@ -174,9 +174,14 @@ export class FormulaEvaluator {
     if (this.isNumber(token)) {
       result = Number(token);
       this._lastResult = result;
-
-      // if the token is a "(" get the value of the expression
-    } else if (token === "(") {
+    }
+    // if the token is 'Rand', generate a random number between 0 and 1
+    else if (token === "Rand") {
+      result = Math.random();
+      this._lastResult = result;
+    }
+    // if the token is a "(" get the value of the expression
+    else if (token === "(") {
       result = this.expression();
       if (this._currentFormula.length === 0 || this._currentFormula.shift() !== ")") {
         this._errorOccured = true;
