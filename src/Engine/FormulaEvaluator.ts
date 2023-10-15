@@ -199,7 +199,69 @@ export class FormulaEvaluator {
       this._errorOccured = true;
       this._errorMessage = ErrorMessages.invalidFormula;
     }
+    // handle postfix operators
+    result = this.postfixHandler(result);
     return result;
+  }
+
+  /**
+   *  
+   * @param result value of current factor
+   * @returns The value of the factor after applying postfix operators in the tokenized formula.
+   * 
+   */
+  private postfixHandler(result: number): number {
+    let newResult = result;
+    const postfixOperatorSet = new Set(["+/-", "cos", "sin", "tan", "asin", "acos", "atan",
+                                        "sqrt", "cuberoot", "sqr", "cube", "1/x"]);
+    while (postfixOperatorSet.has(this._currentFormula[0])) {
+      const currentPostfixOp = this._currentFormula.shift();
+      switch(currentPostfixOp) {
+        case "+/-":
+          newResult = -1 * newResult;
+          break;
+        case "cos":
+          newResult = Math.cos(newResult);
+          break;
+        case "sin":
+          newResult = Math.sin(newResult);
+          break;
+        case "tan":
+          newResult = Math.tan(newResult);
+          break;
+        case "asin":
+          newResult = Math.asin(newResult);
+          break;
+        case "acos":
+          newResult = Math.acos(newResult);
+          break;
+        case "atan":
+          newResult = Math.atan(newResult);
+          break;
+        case "sqrt":
+          newResult = Math.sqrt(newResult);
+          break;
+        case "cuberoot":
+          newResult = Math.cbrt(newResult);
+          break;
+        case "sqr":
+          newResult = Math.pow(newResult, 2);
+          break;
+        case "cube":
+          newResult = Math.pow(newResult, 3);
+          break;
+        case "1/x":
+          if (newResult === 0) {
+            this._errorOccured = true;
+            this._errorMessage = ErrorMessages.divideByZero;
+          }
+          newResult = 1 / newResult;
+          break;
+        default:
+          break;
+      }
+    }
+    return newResult;
   }
 
   /**
