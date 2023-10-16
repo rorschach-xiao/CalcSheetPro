@@ -70,6 +70,14 @@ app.get('/documents', (req: express.Request, res: express.Response) => {
     res.send(documentNames);
 });
 
+// GET /documents/cellsBeingEdited
+app.get('/documents/cellsBeingEdited/:name', (req: express.Request, res: express.Response) => {
+    const name = req.params.name;
+    const cellsBeingEdited = documentHolder.getCellsBeingEdited(name);
+    // convert map to array
+    res.send(Array.from(cellsBeingEdited.entries()));
+});
+
 // PUT /documents/:name
 // userName is in the document body
 app.put('/documents/:name', (req: express.Request, res: express.Response) => {

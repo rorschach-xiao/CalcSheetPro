@@ -380,6 +380,19 @@ class SpreadSheetClient {
         return fileNameOptions;
     }
 
+    /**
+     * get all cells being edited from the server
+     * 
+     * @returns Map<string, string>, a cellBeingEdited-user map.
+     */
+    public async getCellsBeingEdited(name: string): Promise<Map<string, string>> {
+        const fetchURL = `${this._baseURL}/documents/cellsBeingEdited/${name}`;
+        const response = await fetch(fetchURL);
+        const data = await response.json();
+        const cellsBeingEdited : Map<string, string> = new Map<string, string>(data);
+        return cellsBeingEdited;
+    }
+
     
 
 

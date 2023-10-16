@@ -3,6 +3,7 @@ import Formula from "./Formula";
 import Status from "./Status";
 import KeyPad from "./KeyPad";
 import SpreadSheetClient from "../Engine/SpreadSheetClient";
+import getCellsBeingEdited from "../Engine/SpreadSheetController";
 import SheetHolder from "./SheetHolder";
 import FileSelector from "./FileSelector";
 
@@ -201,6 +202,10 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     updateDisplayValues();
   }
 
+  async function getCellsBeingEditedFromServer() : Promise<Map<string, string>> {
+    return spreadSheetClient.getCellsBeingEdited(fileName);
+  }
+
   return (
     <div>
       <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
@@ -209,8 +214,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
       {<SheetHolder cellsValues={cells}
         onClick={onCellClick}
         currentCell={currentCell}
-        currentlyEditing={currentlyEditing}
-        currentUser={userName} ></SheetHolder>}
+        getCellsBeingEdited={getCellsBeingEditedFromServer} ></SheetHolder>}
       <KeyPad onButtonClick={onButtonClick}
         onCommandButtonClick={onCommandButtonClick}
         currentlyEditing={currentlyEditing}></KeyPad>

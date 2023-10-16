@@ -147,6 +147,18 @@ export class SpreadSheetController {
 
   }
 
+  /**  
+   * get the cells currently being edited
+   * 
+   * @returns Map<string, string>
+   * 
+
+   * 
+   */
+  public getCellsBeingEdited(): Map<string, string> {
+    return this._cellsBeingEdited;
+  }
+
 
   /**  
    *  add token to current formula, this is not a cell and thus no dependency updating is needed

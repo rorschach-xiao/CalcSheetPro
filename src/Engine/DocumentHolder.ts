@@ -229,6 +229,11 @@ export class DocumentHolder {
 
     }
 
+    public getCellsBeingEdited(name: string): Map<string, string> {
+        let document = this._documents.get(name);
+        return document!.getCellsBeingEdited();
+    }
+
 
 
 
