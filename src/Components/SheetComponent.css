@@ -51,3 +51,8 @@
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+.sub-label {
+    font-size: 7pt;
+    color:blue;
+  }

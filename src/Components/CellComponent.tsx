@@ -20,9 +20,11 @@ interface CellProps {
 
 function Cell({ value, label, className, onClick, style }: CellProps) {
   return (
-    <button className={className} onClick={onClick} style={style} value={value}>
-      {label}
-    </button>
+    <div className={className}>
+      <button onClick={onClick} style={style} value={value}>
+        {label}
+      </button>
+    </div>
   );
 } // Cell
 

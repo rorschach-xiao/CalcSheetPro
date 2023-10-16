@@ -43,6 +43,7 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
     }
     return "cell";
   }
+  let editorName = "name"; // this is a place holder for the editor name
 
   return (
     <table className="table">
@@ -69,6 +70,7 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
                   className={(getCellClass(Cell.columnRowToCell(colIndex, rowIndex)))}
                 >
                   {cell}
+                  <sub className="sub-label">{editorName ? editorName : ""}</sub>
                 </button>
 
               </td>
