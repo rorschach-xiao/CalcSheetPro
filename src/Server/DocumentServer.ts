@@ -60,15 +60,15 @@ app.use((req, res, next) => {
 });
 
 
-
-
 const documentHolder = new DocumentHolder();
+const documentNames = documentHolder.getDocumentNames();
 
 // GET /documents
+// Endpoint to retrieve the list of document names
 app.get('/documents', (req: express.Request, res: express.Response) => {
-    const documentNames = documentHolder.getDocumentNames();
     res.send(documentNames);
 });
+
 
 // PUT /documents/:name
 // userName is in the document body
@@ -85,9 +85,6 @@ app.put('/documents/:name', (req: express.Request, res: express.Response) => {
 
 
     // is this name valid?
-    const documentNames = documentHolder.getDocumentNames();
-
-
     if (documentNames.indexOf(name) === -1) {
         console.log(`Document ${name} not found, creating it`);
         documentHolder.createDocument(name, 5, 8, userName);

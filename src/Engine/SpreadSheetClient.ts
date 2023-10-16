@@ -414,6 +414,15 @@ class SpreadSheetClient {
         this._server = server;
 
     }
+
+    /**
+     * File selector for the fetch
+     */
+    setFileSelector(file: string): void {
+        this._documentName = file;
+        this.getDocument(this._documentName, this._userName);
+
+    }
 }
 
 
