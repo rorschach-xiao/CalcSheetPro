@@ -12,6 +12,7 @@ import FileBrowser from "./FileBrowser";
 
 interface SpreadSheetProps {
   documentName: string;
+  resetURL: (documentName: string) => void;
 }
 
 /**
@@ -23,7 +24,7 @@ interface SpreadSheetProps {
 // create the client that talks to the backend.
 const spreadSheetClient = new SpreadSheetClient('test', 'juancho');
 
-function SpreadSheet({ documentName }: SpreadSheetProps) {
+function SpreadSheet({ documentName, resetURL }: SpreadSheetProps) {
   const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
   const [resultString, setResultString] = useState(spreadSheetClient.getResultString())
   const [cells, setCells] = useState(spreadSheetClient.getSheetDisplayStringsForGUI());
@@ -194,6 +195,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   return (
     <div>
+      <button onClick={() => resetURL('files')}>File Browser</button>
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
       <Status statusString={statusString}></Status>
       {<SheetHolder cellsValues={cells}
