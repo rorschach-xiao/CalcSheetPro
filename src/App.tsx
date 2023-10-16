@@ -68,7 +68,7 @@ function App() {
 
   function getSheetDisplay() {
     return <div>
-      <SpreadSheet documentName={documentName} />
+      <SpreadSheet documentName={documentName} resetURL={resetURL} />
     </div>
   }
 
@@ -88,7 +88,7 @@ function App() {
     <BrowserRouter >
       <div className="App">
         <header className="App-header">
-        {getDisplayComponent()}
+          {getDisplayComponent()}
         </header>
 
       </div>

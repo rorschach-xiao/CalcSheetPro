@@ -59,8 +59,10 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
 
     // return a <ul> list of the files, each button has the name of the file name
     function getFilesDisplay() {
+        getAllDocuments();
         return <ul>
             {files.map((file) => {
+                console.log(file);
                 return <li key={file}>
                     {getButtonForFile(file)}
                 </li>
@@ -70,7 +72,7 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
 
     function getControlButton() {
         return <div>
-            <button onClick={() => resetURL('files')}>File Browser</button>
+            <button onClick={() => getFilesDisplay()}>File Browser</button>
         </div>
     }
 
