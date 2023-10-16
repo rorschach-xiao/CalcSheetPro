@@ -54,7 +54,7 @@ app.use(bodyParser.json());
 // Add a middleware function to log incoming requests
 app.use((req, res, next) => {
     if (debug) {
-        console.log(`${req.method} ${req.url}`);
+        // console.log(`${req.method} ${req.url}`);
     }
     next();
 });
@@ -73,10 +73,10 @@ app.get('/documents', (req: express.Request, res: express.Response) => {
 // PUT /documents/:name
 // userName is in the document body
 app.put('/documents/:name', (req: express.Request, res: express.Response) => {
-    console.log('PUT /documents/:name');
+    // console.log('PUT /documents/:name');
     const name = req.params.name;
     // get the userName from the body
-    console.log(`PUT /documents/:name ${name}`);
+    // console.log(`PUT /documents/:name ${name}`);
     const userName = req.body.userName;
     if (!userName) {
         res.status(400).send('userName is required');
@@ -89,13 +89,12 @@ app.put('/documents/:name', (req: express.Request, res: express.Response) => {
 
 
     if (documentNames.indexOf(name) === -1) {
-        console.log(`Document ${name} not found, creating it`);
+       // console.log(`Document ${name} not found, creating it`);
         documentHolder.createDocument(name, 5, 8, userName);
     }
 
     // get the document
     const document = documentHolder.getDocumentJSON(name, userName);
-
     res.status(200).send(document);
 });
 

@@ -138,11 +138,12 @@ export class DocumentHolder {
 
     public getDocumentJSON(name: string, userName: string): string {
         let document = this._documents.get(name);
-
         // get the json string for the controler
         const documentContainer = document!.documentContainer(userName);
         // convert to JSON
+        // console.log("documentContainer!!!!!!!!!!!!" , documentContainer);
         const documentJSON = JSON.stringify(documentContainer);
+        // console.log("documentJSON" , documentJSON);
         return documentJSON;
 
 

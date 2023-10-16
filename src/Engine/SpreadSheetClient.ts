@@ -12,6 +12,7 @@ import { DocumentTransport, CellTransport, CellTransportMap, ErrorMessages } fro
 import { Cell } from '../Engine/Cell';
 
 import { PortsGlobal, LOCAL_SERVER_URL, RENDER_SERVER_URL } from '../ServerDataDefinitions';
+import { ContributingUser } from './ContributingUser';
 
 
 
@@ -52,6 +53,8 @@ class SpreadSheetClient {
             currentCell: 'A1',
             isEditing: false,
             cells: new Map<string, CellTransport>(),
+            contributingUsers : [], 
+            cellsBeingEdited: [],
         };
         for (let row = 0; row < document.rows; row++) {
             for (let column = 0; column < document.columns; column++) {
@@ -329,7 +332,6 @@ class SpreadSheetClient {
     }
 
 
-
     /**
      * get the document from the server
      * 
@@ -355,7 +357,6 @@ class SpreadSheetClient {
                 this._updateDocument(document);
 
             });
-
     }
 
 
@@ -366,7 +367,8 @@ class SpreadSheetClient {
         const columns = document.columns;
         const rows = document.rows;
         const isEditing = document.isEditing;
-
+        const cellsBeingEdited = document.cellsBeingEdited;
+        const contributingUsersArray = document.contributingUsers;
 
 
         // create the document
@@ -379,10 +381,11 @@ class SpreadSheetClient {
             rows: rows,
             isEditing: isEditing,
             cells: new Map<string, CellTransport>(),
+            contributingUsers: contributingUsersArray,
+            cellsBeingEdited: cellsBeingEdited,
         };
         // create the cells
         const cells = document.cells as unknown as CellTransportMap;
-
         for (let cellName in cells) {
 
             let cellTransport = cells[cellName];
@@ -394,7 +397,7 @@ class SpreadSheetClient {
             };
             this._document!.cells.set(cellName, cell);
         }
-
+        console.log("document" , this._document);
     }
 
     /**
