@@ -168,7 +168,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     // calculate the current row and column of the clicked on cell
 
     const editStatus = spreadSheetClient.getEditStatus();
-    let realCellLabel = cellLabel ? cellLabel : "";
+    let realCellLabel = cellLabel ? cellLabel : "111";
 
 
     // if the edit status is true then add the token to the machine

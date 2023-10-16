@@ -314,6 +314,20 @@ export class SpreadSheetController {
 
   }
 
+  // public getEditorName(cellLabel: string) {
+  //   // Access the SpreadSheetController instance or the data source
+  //   // where you have information about contributing users and cells being edited
+  //   const userData = this._contributingUsers.get(cellLabel);
+  
+  //   // Check if the cell is being edited by a user
+  //   if (userData && userData.isEditing) {
+  //     return userData.formulaBuilder; 
+  //   }
+  
+  //   return ""; // Return an empty string if the cell is not being edited
+  // }
+  
+
 
   /**
    * 
