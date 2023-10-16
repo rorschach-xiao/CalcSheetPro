@@ -112,6 +112,10 @@ class SpreadSheetClient {
         return this._documentName;
     }
 
+    public get document(): DocumentTransport {
+        return this._document;
+    }
+
     public set documentName(documentName: string) {
         this._documentName = documentName;
     }
@@ -397,7 +401,7 @@ class SpreadSheetClient {
             };
             this._document!.cells.set(cellName, cell);
         }
-        console.log("document" , this._document);
+        // console.log("document" , this._document);
     }
 
     /**

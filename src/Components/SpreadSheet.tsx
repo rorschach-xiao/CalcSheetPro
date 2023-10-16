@@ -31,6 +31,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [serverSelected, setServerSelected] = useState("localhost");
+  const [document, setDocument] = useState(spreadSheetClient.document);
 
 
   function updateDisplayValues(): void {
@@ -42,6 +43,9 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
     setCurrentCell(spreadSheetClient.getWorkingCellLabel());
     setCurrentlyEditing(spreadSheetClient.getEditStatus());
+    setDocument(spreadSheetClient.document);
+
+    console.log("spreadSheetClient document", document);
   }
 
   // useEffect to refetch the data every 1/20 of a second
