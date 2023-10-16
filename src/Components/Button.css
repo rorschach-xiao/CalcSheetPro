@@ -1,6 +1,7 @@
 .button-number {
+  border-radius: 10px;
   background-color: #514caf;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: white;
   padding: 5px 5px;
   text-align: center;
@@ -12,8 +13,9 @@
 }
 
 .button-number-wide {
+  border-radius: 10px;
   background-color: #514caf;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: white;
   padding: 5px 5px;
   text-align: center;
@@ -25,8 +27,9 @@
 }
 
 .button-operator {
+  border-radius: 10px;
   background-color: #512426;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: white;
   padding: 5px 5px;
   text-align: center;
@@ -38,8 +41,9 @@
 }
 
 .button-postfix-operator {
+  border-radius: 10px;
   background-color: #363333;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: white;
   padding: 5px 5px;
   text-align: center;
@@ -51,8 +55,9 @@
 }
 
 .button-edit-end {
+  border-radius: 10px;
   background-color: #707070;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: #ffffff;
   padding: 5px 5px;
   text-align: center;
@@ -64,8 +69,9 @@
 }
 
 .button-edit-start {
+  border-radius: 10px;
   background-color: #707070;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: white;
   padding: 5px 5px;
   text-align: center;
@@ -77,8 +83,9 @@
 }
 
 .button-control {
+  border-radius: 10px;
   background-color: #000000;
-  border: 5px solid #000000;
+  border: 5px solid #0000007e;
   color: rgb(255, 255, 255);
   padding: 5px 5px;
   text-align: center;
