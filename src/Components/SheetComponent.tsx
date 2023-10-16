@@ -4,6 +4,7 @@ import Cell from "../Engine/Cell";
 
 import "./SheetComponent.css";
 
+
 // a component that will render a two dimensional array of cells
 // the cells will be rendered in a table
 // the cells will be rendered in rows
@@ -43,7 +44,10 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
     }
     return "cell";
   }
-  let editorName = "name"; // this is a place holder for the editor name
+  const editors: string[] = [];
+  editors.push("jamie")
+  // let editorName = "user"; // this is a place holder for the editor name
+
 
   return (
     <table className="table">
@@ -68,11 +72,15 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
                   cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
                   data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
                   className={(getCellClass(Cell.columnRowToCell(colIndex, rowIndex)))}
+                  // cell-editorName={getEditorName(Cell.columnRowToCell(colIndex, rowIndex))}
                 >
                   {cell}
-                  <sub className="sub-label">{editorName ? editorName : ""}</sub>
+                  <sub className="sub-label">
+                    {editors.includes(Cell.columnRowToCell(colIndex, rowIndex))
+                      ? Cell.columnRowToCell(colIndex, rowIndex)
+                      : "editor"}
+                  </sub>
                 </button>
-
               </td>
             ))}
           </tr>
