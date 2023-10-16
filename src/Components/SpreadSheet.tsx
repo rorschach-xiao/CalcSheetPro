@@ -7,7 +7,7 @@ import SheetHolder from "./SheetHolder";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
-import FileSelector from "./FileSelector";
+import FileBrowser from "./FileBrowser";
 
 
 interface SpreadSheetProps {
@@ -194,7 +194,6 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   return (
     <div>
-      <FileSelector fileSelector={fileSelector} fileSelected={fileSelected} />
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
       <Status statusString={statusString}></Status>
       {<SheetHolder cellsValues={cells}

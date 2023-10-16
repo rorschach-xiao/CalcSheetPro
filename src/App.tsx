@@ -5,6 +5,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import SpreadSheet from './Components/SpreadSheet';
+import FileBrowser from './Components/FileBrowser';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 
 function App() {
 
@@ -64,13 +66,33 @@ function App() {
     resetURL('test');
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <SpreadSheet documentName={documentName} />
-      </header>
-
+  function getSheetDisplay() {
+    return <div>
+      <SpreadSheet documentName={documentName} />
     </div>
+  }
+
+  function getControlPlane() {
+    return <FileBrowser resetURL={resetURL} />
+  }
+
+  function getDisplayComponent() {
+    if (documentName === 'files' || documentName === '') {
+      return getControlPlane();
+    } else {
+      return getSheetDisplay();
+    }
+  }
+
+  return (
+    <BrowserRouter >
+      <div className="App">
+        <header className="App-header">
+        {getDisplayComponent()}
+        </header>
+
+      </div>
+    </BrowserRouter>
   );
 }
 
