@@ -24,8 +24,7 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
 
     // get a list of files
     const getAllDocuments = useCallback(() => {
-        const requestURL = baseURL + "/documents";
-        console.log(requestURL);
+        const requestURL = baseURL + '/documents';
         fetch(requestURL, {
             method: 'GET',
             headers: {
@@ -59,6 +58,7 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
 
     // return a <ul> list of the files, each button has the name of the file name
     function getFilesDisplay() {
+        getAllDocuments();
         return <ul>
             {files.map((file) => {
                 return <li key={file}>

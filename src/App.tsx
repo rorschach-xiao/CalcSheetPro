@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import SpreadSheet from './Components/SpreadSheet';
 import FileBrowser from './Components/FileBrowser';
-//import { BrowserRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 
 function App() {
 
