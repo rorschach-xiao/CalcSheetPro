@@ -61,14 +61,17 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         type="text"
         placeholder="User name"
         defaultValue={userName}
-        onChange={(event) => {
+        id="inputName"
+      />
+      <button onClick={() => {
           // get the text from the input
-          let userName = event.target.value;
+          let inputElement: HTMLInputElement = document.getElementById('inputName') as HTMLInputElement;
+          let userName = inputElement!.value;
           window.sessionStorage.setItem('userName', userName);
           // set the user name
           setUserName(userName);
           spreadSheetClient.userName = userName;
-        }} />
+        }}>Login</button>
     </div>
 
   }
@@ -206,7 +209,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
       {<SheetHolder cellsValues={cells}
         onClick={onCellClick}
         currentCell={currentCell}
-        currentlyEditing={currentlyEditing} ></SheetHolder>}
+        currentlyEditing={currentlyEditing}
+        currentUser={userName} ></SheetHolder>}
       <KeyPad onButtonClick={onButtonClick}
         onCommandButtonClick={onCommandButtonClick}
         currentlyEditing={currentlyEditing}></KeyPad>
