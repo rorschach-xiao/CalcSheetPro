@@ -7,6 +7,7 @@ import SheetHolder from "./SheetHolder";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
+import FileBrowser from "./FileBrowser";
 
 
 interface SpreadSheetProps {
@@ -31,6 +32,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [serverSelected, setServerSelected] = useState("localhost");
+  const [fileSelected, setFileSelected] = useState("test");
 
 
   function updateDisplayValues(): void {
@@ -149,6 +151,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     spreadSheetClient.setServerSelector(buttonName);
   }
 
+  // this is to help with development,  it allows us to select the server
+  function fileSelector(file: string) {
+    setFileSelected(file);
+    spreadSheetClient.setFileSelector(file);
+  }
 
   /**
    * 
@@ -198,6 +205,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         currentlyEditing={currentlyEditing}></KeyPad>
       {getUserLogin()}
       <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
+
     </div>
   )
 };
