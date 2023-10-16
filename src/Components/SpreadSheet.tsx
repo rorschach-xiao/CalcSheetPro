@@ -4,6 +4,7 @@ import Status from "./Status";
 import KeyPad from "./KeyPad";
 import SpreadSheetClient from "../Engine/SpreadSheetClient";
 import SheetHolder from "./SheetHolder";
+import FileSelector from "./FileSelector";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
@@ -30,12 +31,13 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentCell, setCurrentCell] = useState(spreadSheetClient.getWorkingCellLabel());
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [fileName, setFileName] = useState(documentName);
   const [serverSelected, setServerSelected] = useState("localhost");
 
 
   function updateDisplayValues(): void {
     spreadSheetClient.userName = userName;
-    spreadSheetClient.documentName = documentName;
+    spreadSheetClient.documentName = fileName;
     setFormulaString(spreadSheetClient.getFormulaString());
     setResultString(spreadSheetClient.getResultString());
     setStatusString(spreadSheetClient.getEditStatusString());
@@ -185,8 +187,20 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   }
 
+  async function getFiles(): Promise<string[]> {
+    const fileNames: string[] = await spreadSheetClient.getDocuments()
+    return fileNames;
+  }
+
+  function selectFiles(fileName: string, userName: string) {
+    spreadSheetClient.getDocument(fileName, userName);
+    setFileName(fileName);
+    updateDisplayValues();
+  }
+
   return (
     <div>
+      <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
       <Status statusString={statusString}></Status>
       {<SheetHolder cellsValues={cells}
