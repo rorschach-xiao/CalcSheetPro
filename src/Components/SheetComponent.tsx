@@ -15,12 +15,13 @@ interface SheetComponentProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentCell: string;
   currentlyEditing: boolean;
+  cellsBeingEdited: [string, string][];
 } // interface SheetComponentProps
 
 
 
 
-function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }: SheetComponentProps) {
+function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing, cellsBeingEdited }: SheetComponentProps) {
 
   /**
    * 
@@ -44,9 +45,19 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
     }
     return "cell";
   }
-  const editors: string[] = [];
-  editors.push("jamie")
-  // let editorName = "user"; // this is a place holder for the editor name
+
+  //console.log("cellsBeingEdited", cellsBeingEdited);
+
+  const editorNames = new Map(cellsBeingEdited);
+
+  console.log("cellsBeingEdited", editorNames);
+
+  // function checkEditorInfo(cell: string) {
+  //   const a = cell;
+  //   if (getCellClass(cell) === "cell-editing") {
+  //     return (<sub className="editor-info">{editorNames.get(cell)}</sub>);
+  //   }
+  // }
 
 
   return (
@@ -72,14 +83,14 @@ function SheetComponent({ cellsValues, onClick, currentCell, currentlyEditing }:
                   cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
                   data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
                   className={(getCellClass(Cell.columnRowToCell(colIndex, rowIndex)))}
-                  // cell-editorName={getEditorName(Cell.columnRowToCell(colIndex, rowIndex))}
                 >
                   {cell}
-                  <sub className="sub-label">
-                    {editors.includes(Cell.columnRowToCell(colIndex, rowIndex))
-                      ? Cell.columnRowToCell(colIndex, rowIndex)
-                      : "editor"}
-                  </sub>
+                  {/* {checkEditorInfo(Cell.columnRowToCell(colIndex, rowIndex))} */}
+                  {editorNames.has(Cell.columnRowToCell(colIndex, rowIndex)) && (
+                    <sub className="editor-info">
+                      {editorNames.get(Cell.columnRowToCell(colIndex, rowIndex))}
+                    </sub>
+                  )}
                 </button>
               </td>
             ))}

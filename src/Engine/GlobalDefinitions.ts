@@ -1,3 +1,4 @@
+import { ContributingUser } from "./ContributingUser";
 
 export const ErrorMessages = {
   partial: "#ERR",
@@ -37,5 +38,7 @@ export interface DocumentTransport {
   result: string;
   currentCell: string;
   isEditing: boolean;
+  contributingUsers: [string, ContributingUser][];
+  cellsBeingEdited: [string, string][];
 }
 

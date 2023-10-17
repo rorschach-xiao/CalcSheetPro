@@ -79,6 +79,14 @@ export class SpreadSheetController {
     // if the user is not in the list of users then we will add them with an unasigned cell
     let userData: ContributingUser;
 
+    // console.log("!!!!!!!contributingUsers!!!!!!!");
+    // this._contributingUsers.forEach((user, contributingUser) => {
+    //   console.log("current user:", contributingUser);
+    //   console.log("current cell being edit:", user.cellLabel);
+    // }
+    // );
+    // console.log("!!!!!!!!!!!!!!!");
+
     // check to see if the user is editing another cell.
     if (this._contributingUsers.has(user)) {
       const userData = this._contributingUsers.get(user);
@@ -123,8 +131,14 @@ export class SpreadSheetController {
 
     // now we know we can assign the ownership of the cell to the user
     this._cellsBeingEdited.set(cellLabel, user);
-    const userEditing = this._contributingUsers.get(user);
 
+    console.log("-----------cellsBeingEdited-----------");
+    this._cellsBeingEdited.forEach((cell, user) => {
+      console.log("current user:", user);
+      console.log("current cell being edit:", cell);
+    });
+    console.log("----------------------------");
+    const userEditing = this._contributingUsers.get(user);
 
     userEditing!.isEditing = true;
 
@@ -348,6 +362,9 @@ export class SpreadSheetController {
     container.formula = this.getFormulaStringForUser(user);
     container.result = this.getResultStringForUser(user);
     container.isEditing = userData.isEditing;
+    container.contributingUsers = Array.from(this._contributingUsers);
+    container.cellsBeingEdited = Array.from(this._cellsBeingEdited);
+    console.log("cellsBeingEdited", container.cellsBeingEdited);
     return container;
   }
 
@@ -368,6 +385,14 @@ export class SpreadSheetController {
 
     return spreadsheet;
   }
+
+  public getEditorNames(): [string, string][] {
+    if (this._cellsBeingEdited) {
+        return Array.from(this._cellsBeingEdited);
+    } else {
+        return [];
+    }
+}
 }
 
 export default SpreadSheetController;

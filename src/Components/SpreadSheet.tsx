@@ -31,6 +31,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [serverSelected, setServerSelected] = useState("localhost");
+  const [document, setDocument] = useState(spreadSheetClient.document);
+  const [cellsBeingEdited, setCellsBeingEdited] = useState(spreadSheetClient.getEditorNames());
 
 
   function updateDisplayValues(): void {
@@ -42,6 +44,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
     setCurrentCell(spreadSheetClient.getWorkingCellLabel());
     setCurrentlyEditing(spreadSheetClient.getEditStatus());
+    setDocument(spreadSheetClient.document);
+    setCellsBeingEdited(spreadSheetClient.getEditorNames());
+
+    //console.log("spreadSheetClient document", document);
+    //console.log("editors", cellsBeingEdited)
   }
 
   // useEffect to refetch the data every 1/20 of a second
@@ -192,7 +199,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
       {<SheetHolder cellsValues={cells}
         onClick={onCellClick}
         currentCell={currentCell}
-        currentlyEditing={currentlyEditing} ></SheetHolder>}
+        currentlyEditing={currentlyEditing}
+        cellsBeingEdited={cellsBeingEdited} ></SheetHolder>}
       <KeyPad onButtonClick={onButtonClick}
         onCommandButtonClick={onCommandButtonClick}
         currentlyEditing={currentlyEditing}></KeyPad>
