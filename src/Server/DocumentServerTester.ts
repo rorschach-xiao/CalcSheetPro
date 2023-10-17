@@ -255,116 +255,117 @@ async function runTests() {
     let resultDocument = await addToken(testDocument1, '1', user1);
     checkFormulaAndDisplay(resultDocument, '1', '1');
     checkCell(resultDocument, cellA1, 1, ['1'], '');
+    console.log('======>');
 
     // add 2 (makes 12) 
     resultDocument = await addToken(testDocument1, '2', user1);
     checkFormulaAndDisplay(resultDocument, '12', '12');
     checkCell(resultDocument, cellA1, 12, ['12'], '');
-
+    console.log('======>');
 
     // add a +
     resultDocument = await addToken(testDocument1, '+', user1);
     checkFormulaAndDisplay(resultDocument, '12 +', '#ERR');
     checkCell(resultDocument, cellA1, 12, ['12', '+'], '#ERR');
-
+    console.log('======>');
     // add a reference to B2
     resultDocument = await addCell(testDocument1, cellB2, user1);
     checkFormulaAndDisplay(resultDocument, '12 + B2', '#REF!');
     checkCell(resultDocument, cellA1, 12, ['12', '+', 'B2'], '#REF!');
-
+    console.log('======>');
     resultDocument = await requestEditCell(testDocument1, cellB2, user2);
     checkFormulaAndDisplay(resultDocument, '', '');
     checkCell(resultDocument, cellB2, 0, [], '#EMPTY!');
-
+    console.log('======>');
     resultDocument = await addToken(testDocument1, '3', user2);
     checkCell(resultDocument, cellB2, 3, ['3'], '');
     checkCell(resultDocument, cellA1, 15, ['12', '+', 'B2'], '');
-
+    console.log('======>');
     // check for period
     resultDocument = await addToken(testDocument1, '.', user2);
     checkCell(resultDocument, cellB2, 3, ['3.'], '');
-
+    console.log('======>');
     // check for period
     resultDocument = await addToken(testDocument1, '.', user2);
     checkCell(resultDocument, cellB2, 3, ['3.'], '');
-
+    console.log('======>');
     // check for back space
     resultDocument = await removeToken(testDocument1, user2);
     checkCell(resultDocument, cellB2, 3, ['3'], '');
-
+    console.log('======>');
     // check for request view cell
     resultDocument = await requestViewCell(testDocument1, cellB2, user3);
     checkFormulaAndDisplay(resultDocument, '3', '3');
-
+    console.log('======>');
     // check for request view cell on another cell
     resultDocument = await requestViewCell(testDocument1, cellA1, user3);
     checkFormulaAndDisplay(resultDocument, '12 + B2', '15');
-
+    console.log('======>');
     resultDocument = await requestEditCell(testDocument1, cellC3, user3);
     checkFormulaAndDisplay(resultDocument, '', '');
-
+    console.log('======>');
     resultDocument = await addToken(testDocument1, '4', user3);
     checkFormulaAndDisplay(resultDocument, '4', '4');
-
+    console.log('======>');
     resultDocument = await addToken(testDocument1, '4', user3);
     checkFormulaAndDisplay(resultDocument, '44', '44');
-
+    console.log('======>');
     resultDocument = await clearFormula(testDocument1, user3);
     checkFormulaAndDisplay(resultDocument, '', '');
     checkCell(resultDocument, cellC3, 0, [], '#EMPTY!');
-
+    console.log('======>');
     // Check for request document
     resultDocument = await getDocument(testDocument2, user3);
     checkFormulaAndDisplay(resultDocument, '', '');
     checkCell(resultDocument, cellA1, 0, [], '#EMPTY!');
-
+    console.log('======>');
     resultDocument = await requestEditCell(testDocument2, cellA1, user2);
     resultDocument = await addToken(testDocument2, '1', user2);
     checkFormulaAndDisplay(resultDocument, '1', '1');
     checkCell(resultDocument, cellA1, 1, ['1'], '');
-
+    console.log('======>');
     resultDocument = await getDocument(testDocument1, user3);
     resultDocument = await requestViewCell(testDocument1, cellA1, user3);
     checkFormulaAndDisplay(resultDocument, '12 + B2', '15');
-
+    console.log('======>');
 
     // check for failed request edit cell
     // user 1 requests edit
     resultDocument = await requestEditCell(testDocument1, cellA1, user1);
     checkFormulaAndDisplay(resultDocument, '12 + B2', '15');
     checkIsEditing(resultDocument, true);
-
+    console.log('======>');
     // user 2 requests edit and fails
     resultDocument = await requestEditCell(testDocument1, cellA1, user2);
     checkFormulaAndDisplay(resultDocument, '12 + B2', '15');
     checkIsEditing(resultDocument, false);
-
+    console.log('======>');
     // user 1 adds a +
     resultDocument = await addToken(testDocument1, '+', user1);
     checkFormulaAndDisplay(resultDocument, '12 + B2 +', '#ERR');
-
+    console.log('======>');
     // user 2 requests view and sees the change
     resultDocument = await requestViewCell(testDocument1, cellA1, user2);
     checkFormulaAndDisplay(resultDocument, '12 + B2 +', '#ERR');
-
+    console.log('======>');
     // user1 releases the cell
     resultDocument = await requestViewCell(testDocument1, cellA1, user1);
     checkIsEditing(resultDocument, false);
-
+    console.log('======>');
     // user2 requests edit to fix the bug
     resultDocument = await requestEditCell(testDocument1, cellA1, user2);
     checkFormulaAndDisplay(resultDocument, '12 + B2 +', '#ERR');
     checkIsEditing(resultDocument, true);
-
+    console.log('======>');
     // user2 adds a 1
     resultDocument = await addToken(testDocument1, '1', user2);
     checkFormulaAndDisplay(resultDocument, '12 + B2 + 1', '16');
-
+    console.log('======>');
     // user1 requests Edit and faile
     resultDocument = await requestEditCell(testDocument1, cellA1, user1);
     checkFormulaAndDisplay(resultDocument, '12 + B2 + 1', '16');
     checkIsEditing(resultDocument, false);
-
+    console.log('======>');
 
 
 
