@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 //import Task from './task';
 import { PortsGlobal } from '../ServerDataDefinitions';
 
-
+import './FileBrowser.css'; 
 
 const port = PortsGlobal.serverPort;
 
@@ -50,7 +50,8 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
     // return a button for a file
     // onclick should call the resetURL function
     function getButtonForFile(file: string) {
-        return <button onClick={() =>
+        return <button className="custom-button" 
+            onClick={() =>
             resetURL(file)}>
             {file}
         </button>
@@ -71,7 +72,9 @@ export function FileBrowser({ resetURL }: FileBrowserProps) {
 
     function getControlButton() {
         return <div>
-            <button onClick={() => getFilesDisplay()}>File Browser</button>
+            <button className='custom-button' onClick={() => getFilesDisplay()}>
+                <span className="file-browser-text">File Browser</span>
+            </button>
         </div>
     }
 

@@ -7,7 +7,7 @@ import SheetHolder from "./SheetHolder";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
-import FileBrowser from "./FileBrowser";
+//import FileBrowser from "./FileBrowser";
 
 
 interface SpreadSheetProps {
@@ -195,7 +195,12 @@ function SpreadSheet({ documentName, resetURL }: SpreadSheetProps) {
 
   return (
     <div>
-      <button onClick={() => resetURL('files')}>File Browser</button>
+      <button className="custom-button"
+      onClick={() => resetURL('files')}>
+        <span className="file-browser-text">
+          File Browser
+          </span>
+      </button>
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
       <Status statusString={statusString}></Status>
       {<SheetHolder cellsValues={cells}
