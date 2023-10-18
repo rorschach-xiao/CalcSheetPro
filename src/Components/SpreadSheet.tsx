@@ -10,6 +10,8 @@ import FileSelector from "./FileSelector";
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
 
+import "./SpreadSheet.css";
+
 
 interface SpreadSheetProps {
   documentName: string;
@@ -76,6 +78,27 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     </div>
 
   }
+
+  function createNewSheet() {
+    return <div >
+    <label className="create-sheet-label">CREATE A SHEET</label>
+    <input
+      type="text"
+      placeholder="Sheet Name"
+      id="inputSheetName"
+    />
+    <button onClick={() => {
+        // get the text from the input
+        let inputElement: HTMLInputElement = document.getElementById('inputSheetName') as HTMLInputElement;
+        let sheetName = inputElement!.value;
+        window.sessionStorage.setItem('sheetName', sheetName);
+        // set the sheet name
+        setFileName(sheetName)
+        spreadSheetClient.documentName = sheetName;
+      }}>Create</button>
+  </div>
+
+} 
 
   function checkUserName(): boolean {
     if (userName === "") {
@@ -209,6 +232,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div>
       <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
+      {createNewSheet()}
       <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
       <Status statusString={statusString}></Status>
       {<SheetHolder cellsValues={cells}
