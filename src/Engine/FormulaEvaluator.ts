@@ -180,12 +180,12 @@ export class FormulaEvaluator {
       result = Math.random();
       this._lastResult = result;
     }
-    // if the token is 'Rand', generate a random number between 0 and 1
+    // if the token is 'Pi', return the value of PI
     else if (token === "Pi") {
       result = Math.PI;
       this._lastResult = result;
     }
-    // if the token is 'Rand', generate a random number between 0 and 1
+    // if the token is 'e', return the value of e
     else if (token === "e") {
       result = Math.E;
       this._lastResult = result;
