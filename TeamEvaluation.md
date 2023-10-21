@@ -35,8 +35,10 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
 
 ## Development Progress
 - Yang Xiao:
-    - Part2: Done
-    - Also develop Part1 & Part3 in `dev_xy_fullstack` branch
+    - Part2(develop in `dev_xy` branch): 
+        - Progress: Done
+    - Part1 & Part3(develop in `dev_xy_fullstack` branch):
+        - Progress: Done
 
 - Gavin:
 
