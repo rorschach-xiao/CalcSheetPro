@@ -49,6 +49,11 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
          - Progress: Done
 
 - Grace & Susie:
+    - Part1 (develop in `dev_xya` branch):
+        - Progress: Done
+    - Part1 (develop in `dev_ysy` branch):
+        - Progress: Done
+
 
 ## Delivery
 
