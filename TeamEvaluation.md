@@ -41,8 +41,8 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
         - Progress: Done
 
 - Ge Xu(Gavin):
-  - Part3(develop in `dev_xg` branch): 
-        - Progress: Done
+    - Part3(develop in `dev_xg` branch): 
+         - Progress: Done
 
 - Jamie:
 
