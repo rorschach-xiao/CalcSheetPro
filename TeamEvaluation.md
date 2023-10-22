@@ -40,7 +40,9 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
     - Part1 & Part3(develop in `dev_xy_fullstack` branch):
         - Progress: Done
 
-- Gavin:
+- Ge Xu(Gavin):
+  - Part3(develop in `dev_xg` branch): 
+        - Progress: Done
 
 - Jamie:
 
@@ -48,4 +50,4 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
 
 ## Delivery
 
-After disscussion, we decided to merge the design in `dev_xy_fullstack` into `test` and `main`.
+After discussion, we decided to merge the design in `dev_xy_fullstack` into `test` and `main`.
