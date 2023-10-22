@@ -45,6 +45,8 @@ Our overall development workflow follows a three-tiered approach: `dev` -> `test
          - Progress: Done
 
 - Jamie:
+    - Part3 frontend(develop in `dev_zjm` branch): 
+         - Progress: Done
 
 - Grace & Susie:
 
