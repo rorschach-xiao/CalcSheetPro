@@ -159,7 +159,10 @@ app.put('/document/cell/edit/:name', (req: express.Request, res: express.Respons
     // request access to the cell
     const result = documentHolder.requestEditAccess(name, cell, userName);
     const documentJSON = documentHolder.getDocumentJSON(name, userName);
-
+    if (result === false){
+        res.status(400).send(documentJSON);
+        return;
+    }
     res.status(200).send(documentJSON);
 });
 
