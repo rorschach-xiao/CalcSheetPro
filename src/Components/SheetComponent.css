@@ -68,3 +68,12 @@
     margin-left: 70px;
     background-color:  rgb(223, 11, 11);
 }
+
+.cell-scrollbar{
+    width: 100px;
+    overflow: auto;
+}
+  
+.cell-scrollbar::-webkit-scrollbar {
+    display: none;
+}

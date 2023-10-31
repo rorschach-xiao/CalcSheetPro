@@ -35,3 +35,14 @@
   font-family: courier;
   width: 250px;
 }
+
+
+.invisible-scrollbar{
+  display: block;
+  width: 250px;
+  overflow: auto;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
