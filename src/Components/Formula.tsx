@@ -21,13 +21,15 @@ const Formula: React.FC<FormulaProps> = ({ formulaString, resultString }) => {
       <span data-testid="FormulaTitle">Formula </span>
       <br />
       <div className="formula">
-        <span data-testid="FormulaValue">{formulaString} </span>
+        <span className={"invisible-scrollbar"} 
+        data-testid="FormulaValue">{formulaString} </span>
       </div>
       <br />
       <span data-testid="Result">Result</span>
       <br />
       <div className="formula">
-        <span data-testid="FormulaResult">{resultString}</span>
+        <span className={"invisible-scrollbar"} 
+        data-testid="FormulaResult">{resultString}</span>
       </div>
     </div>
 
