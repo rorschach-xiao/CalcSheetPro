@@ -1,5 +1,6 @@
 export const PortsGlobal = {
     serverPort: 3005,
+    chatServerPort: 3006,
     clientPort: 3000
 };
 
