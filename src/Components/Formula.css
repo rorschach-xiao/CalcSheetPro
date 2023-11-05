@@ -40,7 +40,8 @@
 .invisible-scrollbar{
   display: block;
   width: 250px;
-  overflow: auto;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .invisible-scrollbar::-webkit-scrollbar {
