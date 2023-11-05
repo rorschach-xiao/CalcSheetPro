@@ -54,7 +54,7 @@ app.use(bodyParser.json());
 // Add a middleware function to log incoming requests
 app.use((req, res, next) => {
     if (debug) {
-        console.log(`${req.method} ${req.url}`);
+        // console.log(`${req.method} ${req.url}`);
     }
     next();
 });
@@ -81,10 +81,10 @@ app.get('/documents/cellsBeingEdited/:name', (req: express.Request, res: express
 // PUT /documents/:name
 // userName is in the document body
 app.put('/documents/:name', (req: express.Request, res: express.Response) => {
-    console.log('PUT /documents/:name');
+    // console.log('PUT /documents/:name');
     const name = req.params.name;
     // get the userName from the body
-    console.log(`PUT /documents/:name ${name}`);
+    // console.log(`PUT /documents/:name ${name}`);
     const userName = req.body.userName;
     if (!userName) {
         res.status(400).send('userName is required');
