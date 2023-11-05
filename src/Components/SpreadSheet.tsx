@@ -9,6 +9,7 @@ import FileSelector from "./FileSelector";
 
 import { ButtonNames } from "../Engine/GlobalDefinitions";
 import ServerSelector from "./ServerSelector";
+import ChatPad from "./ChatPad";
 
 import "./SpreadSheet.css";
 
@@ -230,21 +231,22 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
 
   return (
-    <div>
-      <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
-      {createNewSheet()}
-      <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
-      <Status statusString={statusString}></Status>
-      {<SheetHolder cellsValues={cells}
-        onClick={onCellClick}
-        currentCell={currentCell}
-        getCellsBeingEdited={getCellsBeingEditedFromServer} ></SheetHolder>}
-      <KeyPad onButtonClick={onButtonClick}
-        onCommandButtonClick={onCommandButtonClick}
-        currentlyEditing={currentlyEditing}></KeyPad>
-      {getUserLogin()}
-      <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
-    </div>
+      <div>
+        <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
+        {createNewSheet()}
+        <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
+        <Status statusString={statusString}></Status>
+        {<SheetHolder cellsValues={cells}
+          onClick={onCellClick}
+          currentCell={currentCell}
+          getCellsBeingEdited={getCellsBeingEditedFromServer} ></SheetHolder>}
+        <KeyPad onButtonClick={onButtonClick}
+          onCommandButtonClick={onCommandButtonClick}
+          currentlyEditing={currentlyEditing}></KeyPad>
+        {getUserLogin()}
+        <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
+        <ChatPad userName={userName}></ChatPad>
+      </div>
   )
 };
 

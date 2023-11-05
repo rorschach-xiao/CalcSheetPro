@@ -3,3 +3,10 @@
     font-family: "Gill Sans", sans-serif; 
     font-size: 16px;
 }
+
+.container {
+    display: flex; 
+}
+.div1, .div2 {
+    flex: 1; 
+}
