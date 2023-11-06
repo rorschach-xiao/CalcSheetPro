@@ -10,7 +10,7 @@ interface MessageProp {
     msg: string
     timestamp: string
 }
-const deploy: string = "local";
+const deploy: string = "render";
 
 let serverURL: string;
 let clientURL: string;
