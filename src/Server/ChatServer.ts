@@ -12,18 +12,12 @@ interface MessageProp {
 }
 const deploy: string = "local";
 
-let serverURL: string;
 let clientURL: string;
-let redisURL: string;
 
 if (deploy === "local") {
-    serverURL = `${LOCAL_SERVER_URL}:${PortsGlobal.chatServerPort}`;
     clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
-    redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
 } else {
-    serverURL = `${RENDER_SERVER_URL}:${PortsGlobal.chatServerPort}`;
     clientURL = `${RENDER_CLIENT_URL}:${PortsGlobal.clientPort}`;
-    redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 }
 
 
@@ -38,7 +32,7 @@ const io = new Server(server, {serveClient: false, cors: {
 
 // const redis = new Redis(); // connect to 127.0.0.1:6379
 
-const redis = new Redis(redisURL, {
+const redis = new Redis({
     // This is the default value of `retryStrategy`
     retryStrategy(times) {
       const delay = Math.min(times * 50, 2000);
@@ -49,8 +43,8 @@ const redis = new Redis(redisURL, {
 io.on('connection', (socket) => {
     console.log(`A user connected:${socket.id}}`);
 
-    let sub: Redis| null = new Redis(redisURL);
-    let pub: Redis| null = new Redis(redisURL);
+    let sub: Redis| null = new Redis();
+    let pub: Redis| null = new Redis();
 
     let startId: string;
     let reachEnd: boolean = false;
