@@ -3,29 +3,17 @@ import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
 import { PortsGlobal, LOCAL_REDIS_URL, RENDER_REDIS_URL, RENDER_SERVER_URL, LOCAL_SERVER_URL, LOCAL_CLIENT_URL, RENDER_CLIENT_URL } from '../ServerDataDefinitions';
-import { start } from 'repl';
 
 interface MessageProp {
     user: string,
     msg: string
     timestamp: string
 }
-const deploy: string = "local";
-
-let clientURL: string;
-
-if (deploy === "local") {
-    clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
-} else {
-    clientURL = `${RENDER_CLIENT_URL}:${PortsGlobal.clientPort}`;
-}
-
-
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {serveClient: false, cors: {
-    origin: clientURL,
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
