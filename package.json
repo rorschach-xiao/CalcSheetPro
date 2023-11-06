@@ -37,7 +37,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-server": "ts-node ./src/Server/DocumentServer.ts & ts-node ./src/Server/ChatServer.ts",
+    "start-server": "ts-node ./src/Server/DocumentServer.ts",
+    "start-chat-server": "ts-node ./src/Server/ChatServer.ts",
     "test-server": "ts-node ./src/Server/DocumentServerTester.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
