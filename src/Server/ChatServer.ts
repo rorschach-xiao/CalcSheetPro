@@ -16,19 +16,16 @@ let clientURL: string;
 let redisURL: string;
 
 if (deploy === "local") {
-    clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
     redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
 } else {
-    clientURL = `${RENDER_CLIENT_URL}:10000`;
     redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 }
-
 
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {serveClient: false, cors: {
-    origin: clientURL,
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
