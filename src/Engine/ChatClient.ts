@@ -18,7 +18,7 @@ class ChatClient {
     private _socket: any; 
     constructor(userName: string) {
         this._userName = userName;
-        this._serverURL = `${LOCAL_SERVER_URL}:${this._serverPort}`;
+        this._serverURL = `${RENDER_SERVER_URL}:${this._serverPort}`;
     }
     
     connect(onMessageReceived: (msg: ClientMessageProp) => void, onHistoryMessageReceived: (msgs: ClientMessageProp[]) => void) {

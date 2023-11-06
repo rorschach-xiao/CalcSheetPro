@@ -12,16 +12,13 @@ interface MessageProp {
 }
 const deploy: string = "render";
 
-let serverURL: string;
 let clientURL: string;
 let redisURL: string;
 
 if (deploy === "local") {
-    serverURL = `${LOCAL_SERVER_URL}:${PortsGlobal.chatServerPort}`;
     clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
     redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
 } else {
-    serverURL = `${RENDER_SERVER_URL}:${PortsGlobal.chatServerPort}`;
     clientURL = `${RENDER_CLIENT_URL}:${PortsGlobal.clientPort}`;
     redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 }

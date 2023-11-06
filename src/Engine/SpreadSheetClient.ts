@@ -24,7 +24,7 @@ class SpreadSheetClient {
 
 
     private _serverPort: number = PortsGlobal.serverPort;
-    private _baseURL: string = `${LOCAL_SERVER_URL}:${this._serverPort}`;
+    private _baseURL: string = `${RENDER_SERVER_URL}:${this._serverPort}`;
     private _userName: string = 'juancho';
     private _documentName: string = 'test';
     private _document: DocumentTransport;
