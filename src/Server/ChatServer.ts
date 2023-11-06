@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
-import { PortsGlobal, LOCAL_REDIS_URL, RENDER_REDIS_URL, RENDER_SERVER_URL, LOCAL_SERVER_URL, LOCAL_CLIENT_URL, RENDER_CLIENT_URL } from '../ServerDataDefinitions';
+import { PortsGlobal, RENDER_REDIS_URL } from '../ServerDataDefinitions';
 import { start } from 'repl';
 
 interface MessageProp {
@@ -10,17 +10,8 @@ interface MessageProp {
     msg: string
     timestamp: string
 }
-const deploy: string = "render";
 
-let clientURL: string;
-let redisURL: string;
-
-if (deploy === "local") {
-    redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
-} else {
-    redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
-}
-
+const redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 
 const app = express();
 const server = http.createServer(app);
