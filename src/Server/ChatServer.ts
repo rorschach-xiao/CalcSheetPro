@@ -19,7 +19,7 @@ if (deploy === "local") {
     clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
     redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
 } else {
-    clientURL = `${LOCAL_CLIENT_URL}:10000`;
+    clientURL = `${RENDER_CLIENT_URL}:10000`;
     redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 }
 
