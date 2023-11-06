@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
-import { PortsGlobal } from '../ServerDataDefinitions';
+import { PortsGlobal, LOCAL_REDIS_URL, RENDER_REDIS_URL, RENDER_SERVER_URL, LOCAL_SERVER_URL, LOCAL_CLIENT_URL, RENDER_CLIENT_URL } from '../ServerDataDefinitions';
 import { start } from 'repl';
 
 interface MessageProp {
@@ -10,17 +10,35 @@ interface MessageProp {
     msg: string
     timestamp: string
 }
+const deploy: string = "local";
+
+let serverURL: string;
+let clientURL: string;
+let redisURL: string;
+
+if (deploy === "local") {
+    serverURL = `${LOCAL_SERVER_URL}:${PortsGlobal.chatServerPort}`;
+    clientURL = `${LOCAL_CLIENT_URL}:${PortsGlobal.clientPort}`;
+    redisURL = `${LOCAL_REDIS_URL}:${PortsGlobal.redisPort}`;
+} else {
+    serverURL = `${RENDER_SERVER_URL}:${PortsGlobal.chatServerPort}`;
+    clientURL = `${RENDER_CLIENT_URL}:${PortsGlobal.clientPort}`;
+    redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
+}
+
+
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {serveClient: false, cors: {
-    origin: `http://localhost:${PortsGlobal.clientPort}`,
+    origin: clientURL,
     methods: ["GET", "POST"]
   }
 });
 
 // const redis = new Redis(); // connect to 127.0.0.1:6379
-const redis = new Redis({
+
+const redis = new Redis(redisURL, {
     // This is the default value of `retryStrategy`
     retryStrategy(times) {
       const delay = Math.min(times * 50, 2000);
@@ -31,8 +49,8 @@ const redis = new Redis({
 io.on('connection', (socket) => {
     console.log(`A user connected:${socket.id}}`);
 
-    let sub: Redis| null = new Redis();
-    let pub: Redis| null = new Redis();
+    let sub: Redis| null = new Redis(redisURL);
+    let pub: Redis| null = new Redis(redisURL);
 
     let startId: string;
     let reachEnd: boolean = false;
