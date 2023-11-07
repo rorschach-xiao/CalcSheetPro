@@ -24,6 +24,13 @@ function ChatPad({userName}: ChatPadProps) {
     setChatLog((prevLog) => [...prevLog, msg]);
   };
   const onHistoryMessageReceived = (msgs: ClientMessageProp[]) => {
+    msgs.forEach((msg) => {
+      // delete thi system message from this array
+      if (msg.user === "System" && msg.msg === "[WARNING] No more history messages") {
+        alert("No more history messages");
+        msgs.splice(msgs.indexOf(msg), 1);
+      }
+    });
     setChatLog((prevlog) => [...msgs, ...prevlog]);
   };
   // initialize the chat client connenction
@@ -59,7 +66,7 @@ function ChatPad({userName}: ChatPadProps) {
                 <div className='message-current'>{msgObj.msg}</div>
               </div>);
     } else if (msgObj.user === "System" && msgObj.msg === "[WARNING] No more history messages") {
-      alert("No more history messages");
+      return;
     } else{ // message from other users
       return (<div className='chat-message-other' key={index}>
                 <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
