@@ -28,6 +28,8 @@
     align-items: flex-start; /* 垂直居中对齐 */
     text-align: left;
     max-width: 50%;
+    width: auto;
+    display: inline-block;
 }
 .chat-message-current {
     margin: 10px; /* 为每个聊天消息添加间距 */
@@ -35,6 +37,7 @@
     text-align: right;
     max-width: 50%;
     margin-left: auto;
+    width: auto;
 }
   
 .user {
@@ -49,6 +52,8 @@
     padding: 10px; /* 消息内边距 */
     border-radius: 5px; /* 圆角边框 */
     overflow-wrap: break-word;
+    display: inline-block;
+    max-width: 70%;
 }
 
 .message-current {
@@ -56,6 +61,8 @@
     padding: 10px; /* 消息内边距 */
     border-radius: 5px; /* 圆角边框 */
     overflow-wrap: break-word;
+    display: inline-block;
+    max-width: 70%;
 }
   
 .chat-input-container {
