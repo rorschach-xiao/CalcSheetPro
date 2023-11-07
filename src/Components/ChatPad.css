@@ -29,7 +29,6 @@
     text-align: left;
     max-width: 50%;
     width: auto;
-    display: inline-block;
 }
 .chat-message-current {
     margin: 10px; /* 为每个聊天消息添加间距 */
