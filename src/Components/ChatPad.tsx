@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ChatClient from '../Engine/ChatClient';
 import './ChatPad.css';
-import { preProcessFile } from 'typescript';
 
 
 interface ChatPadProps {

@@ -36,7 +36,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [fileName, setFileName] = useState(documentName);
-  const [serverSelected, setServerSelected] = useState("localhost");
+  const [serverSelected, setServerSelected] = useState("renderhost");
 
 
   function updateDisplayValues(): void {

@@ -2,13 +2,15 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
-import { PortsGlobal, LOCAL_REDIS_URL, RENDER_REDIS_URL, RENDER_SERVER_URL, LOCAL_SERVER_URL, LOCAL_CLIENT_URL, RENDER_CLIENT_URL } from '../ServerDataDefinitions';
+import { PortsGlobal } from '../ServerDataDefinitions';
 
 interface MessageProp {
     user: string,
     msg: string
     timestamp: string
 }
+
+
 
 const app = express();
 const server = http.createServer(app);
@@ -60,6 +62,7 @@ io.on('connection', (socket) => {
         const timestamp = message[1][3];
         const msg = message[1][5];
         const messageObj: MessageProp = {user: user, timestamp: timestamp, msg: msg};
+        console.log(messageObj);
         socket.emit('new_message', messageObj);
     };
 
@@ -83,7 +86,11 @@ io.on('connection', (socket) => {
     // -------------------- Message History -------------------- //
     async function getStartId() {
         const allMessages = await redis.xrange("chat", "-", "+");
-        startId = allMessages[allMessages.length - 1][0];
+        if (allMessages.length === 0) {
+            startId = "+";
+        } else {
+            startId = allMessages[allMessages.length - 1][0];
+        }
     }
     socket.on('request_history', async () => {
         if (reachEnd) {
@@ -95,6 +102,14 @@ io.on('connection', (socket) => {
         }
         if (startId === undefined) {
             await getStartId();
+            if (startId === "+") {
+                socket.emit('history_message', 
+                            [{user: "System", 
+                              timestamp: new Date().toDateString(), 
+                              msg: "[WARNING] No more history messages"}]);
+                reachEnd = true;
+                return;
+            }
         }
         // get last 20 messages
         const messages = await redis.xrevrange("chat", startId, "-", "COUNT", "20");
