@@ -37,6 +37,13 @@
     },
     {
       "type": "node-terminal",
+      "name": "Start Chat Server",
+      "request": "launch",
+      "command": "npm run start-chat-server",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node-terminal",
       "name": "Start Public Server",
       "request": "launch",
       "command": "HOST=0.0.0.0 npm run start-server",
