@@ -78,13 +78,9 @@ function ChatPad({userName}: ChatPadProps) {
 
   return (
     <div className='chat-container'>
-      <button onClick={() => chatClient.loadHistoryMessage()}>Load More</button>
+      <button onClick={() => chatClient.loadHistoryMessage()} className="loadMoreButton">Load More</button>
       <div className='chat-window'>
         {chatLog.map((msgObj, index) => (
-          // <div className='chat-message' key={index}>
-          //   <div className='user'>{`${msgObj.user} [${msgObj.timestamp.toLocaleString('en-US')}]`}</div>
-          //   <div className='message'>{msgObj.msg}</div>
-          // </div>
           getChatScopes(msgObj, index)
         ))}
       </div>

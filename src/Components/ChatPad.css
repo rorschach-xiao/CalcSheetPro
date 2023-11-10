@@ -83,3 +83,9 @@
     width: 10%;
     height: 100%;
 }
+
+.loadMoreButton {
+    margin-left: 630px;
+    width: 50px;
+    border-radius: 5px;
+}

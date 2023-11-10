@@ -38,6 +38,13 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [fileName, setFileName] = useState(documentName);
   const [serverSelected, setServerSelected] = useState("renderhost");
 
+  const [chatOpen, setChatOpen] = useState(false);
+
+  const toggleChat = () => {
+    setChatOpen(!chatOpen);
+  };
+
+
 
   function updateDisplayValues(): void {
     spreadSheetClient.userName = userName;
@@ -231,6 +238,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
 
   return (
+    <div className="spreadsheet-container">
+    <div className={`left-column ${chatOpen ? 'shifted' : ''}`}>
       <div>
         <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
         {createNewSheet()}
@@ -245,8 +254,15 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           currentlyEditing={currentlyEditing}></KeyPad>
         {getUserLogin()}
         <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
-        <ChatPad userName={userName}></ChatPad>
       </div>
+      </div>
+      <div className={`right-column ${chatOpen ? 'shifted' : ''}`}>
+        <button className="chat-button" onClick={toggleChat}>
+          <span>Chat</span>
+        </button>
+        {chatOpen && <ChatPad userName={userName} />}
+      </div>
+    </div>
   )
 };
 

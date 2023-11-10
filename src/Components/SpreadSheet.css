@@ -10,3 +10,35 @@
 .div1, .div2 {
     flex: 1; 
 }
+
+.spreadsheet-container {
+    display: flex;
+}
+  
+.left-column {
+    transition: transform 0.3s ease;
+}
+  
+.right-column {
+    width: 100px; 
+    transition: transform 0.3s ease;
+}
+  
+.shifted {
+    transform: translateX(-300px); 
+}
+
+.chat-button {
+    background-color: powderblue;
+    color: black; /* Set your preferred text color */
+    margin-top: 150px;
+    padding: 10px 15px; /* Adjust padding as needed */
+    font-size: 16px; 
+    cursor: pointer;
+    border-radius: 5px; 
+    transition: background-color 0.3s ease;
+  }
+  
+  .chat-button:hover {
+    background-color: lightskyblue;
+  }
