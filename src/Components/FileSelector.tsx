@@ -23,7 +23,7 @@ const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName}) => 
 
     return (
         <div>
-            <label >SELECT A SHEET</label>
+            <label >Select a sheet</label>
             <select onChange={handleChange}>
             {files.map(f => 
                 <option key={f} value={f}>{f}</option>

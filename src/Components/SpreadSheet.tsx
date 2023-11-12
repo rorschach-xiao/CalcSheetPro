@@ -89,7 +89,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function createNewSheet() {
     return <div >
-    <label className="create-sheet-label">CREATE A SHEET</label>
+    <label className="create-sheet-label">Create a sheet</label>
     <input
       type="text"
       placeholder="Sheet Name"
@@ -240,18 +240,20 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="spreadsheet-container">
     <div className={`left-column ${chatOpen ? 'shifted' : ''}`}>
-      <div>
+      <div className="left-part-container">
         <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
         {createNewSheet()}
-        <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
-        <Status statusString={statusString}></Status>
-        {<SheetHolder cellsValues={cells}
-          onClick={onCellClick}
-          currentCell={currentCell}
-          getCellsBeingEdited={getCellsBeingEditedFromServer} ></SheetHolder>}
-        <KeyPad onButtonClick={onButtonClick}
-          onCommandButtonClick={onCommandButtonClick}
-          currentlyEditing={currentlyEditing}></KeyPad>
+        <div className="body-container">
+          <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
+          <Status statusString={statusString}></Status>
+          {<SheetHolder cellsValues={cells}
+            onClick={onCellClick}
+            currentCell={currentCell}
+            getCellsBeingEdited={getCellsBeingEditedFromServer} ></SheetHolder>}
+          <KeyPad onButtonClick={onButtonClick}
+            onCommandButtonClick={onCommandButtonClick}
+            currentlyEditing={currentlyEditing}></KeyPad>
+        </div>
         {getUserLogin()}
         <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
       </div>

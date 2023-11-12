@@ -1,4 +1,4 @@
-
+import "./ServerSelector.css";
 
 // define the props for ServerSelector
 
@@ -30,7 +30,7 @@ function ServerSelector({ serverSelector, serverSelected }: ServerSelectorProps)
         <div>
             <button onClick={onButtonClick}>localhost</button>
             <button onClick={onButtonClick}>renderhost</button>
-            current server: {serverSelected}
+            <label>current server: {serverSelected}</label>
         </div>
     )
 }
