@@ -16,9 +16,11 @@ class ChatClient {
     private _renderServerURL: string = RENDER_CHAT_SERVER_URL;
     private _serverPort: number = PortsGlobal.chatServerPort;
     private _socket: any; 
+    private _server: string;
     constructor(userName: string) {
         this._userName = userName;
         this._serverURL = `${this._localServerURL}:${this._serverPort}`;
+        this._server = 'localhost';
     }
     
     connect(onMessageReceived: (msg: ClientMessageProp) => void, onHistoryMessageReceived: (msgs: ClientMessageProp[]) => void) {
@@ -71,6 +73,19 @@ class ChatClient {
         }
     }
 
+    setServerSelector(server: string): void {
+        if (server === this._server) {
+            return;
+        }
+        if (server === 'localhost') {
+            this._serverURL =`${this._localServerURL}:${this._serverPort}`;
+        } else {
+            this._serverURL = `${this._renderServerURL}`;
+        }
+        this._server = server;
+    }
+
+
     disconnect() {
         if (this._socket) {
             this._socket.disconnect();
@@ -87,6 +102,10 @@ class ChatClient {
 
     public get socketId() { 
         return this._socket.id;
+    }
+
+    public get server() {
+        return this._server;
     }
 
     

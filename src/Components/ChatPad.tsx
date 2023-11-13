@@ -5,6 +5,7 @@ import './ChatPad.css';
 
 interface ChatPadProps {
     userName: string;
+    chatClient: ChatClient;
 }
 
 interface ClientMessageProp {
@@ -13,11 +14,11 @@ interface ClientMessageProp {
   timestamp: string
 }
 
-const chatClient = new ChatClient("Yang");
+
 const vancouverTimezone = "America/Vancouver";
 const options = { timeZone: vancouverTimezone, hour12: false };
 
-function ChatPad({userName}: ChatPadProps) {
+function ChatPad({userName, chatClient}: ChatPadProps) {
   const [chatLog, setChatLog] = useState<ClientMessageProp[]>([]);
 
   const onMessageReceived = (msg: ClientMessageProp) => {
@@ -37,10 +38,11 @@ function ChatPad({userName}: ChatPadProps) {
   // initialize the chat client connenction
   useEffect(() => {
     chatClient.connect(onMessageReceived, onHistoryMessageReceived);
+    setChatLog([]);
     return () => {
       chatClient.disconnect();
     }
-  }, []);
+  }, [chatClient.server]);
 
   // change the user name
   useEffect(() => {
