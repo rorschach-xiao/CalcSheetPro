@@ -1,12 +1,39 @@
 .create-sheet-label {
     margin-right: 10px;
     font-family: "Gill Sans", sans-serif; 
-    font-size: 16px;
+    font-size: 17px;
+}
+.bar-container {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr 3fr;
+    background-color: #306b88;
+    color: #fff;
+    padding-bottom: 10px;
+    width: 100%;
+    border-bottom: #020202;
+    grid-area: head;
+}
+.bar-container input {
+    width: 100px;
 }
 
-.container {
-    display: flex; 
+.sheet {
+    width: 100%;
+    grid-area: sheet;
 }
-.div1, .div2 {
-    flex: 1; 
+
+.page {
+    display: grid;
+    grid-template-areas:
+    "head head"
+    "sheet chat"
+    "sheet chat";
+    grid-template-rows: 45px 4fr;
+    grid-template-columns: 3fr auto;
+    height: 100%;
+    width: 100%;
+}
+
+.chat {
+    grid-area: chat;
 }
