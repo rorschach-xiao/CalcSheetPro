@@ -4,7 +4,7 @@
   width: 60px;
   right: 0;
   overflow: hidden;
-  transition: width 0.5s ease;
+  transition: width 0.1s ease;
   background-color: #282c34;
   display: grid;
   grid-template-areas: 
@@ -26,7 +26,6 @@
     font-size: 14px; /* 设定字体大小 */
     color: #333; /* 深色文本 */
     background-color: #f9f9f9; /* 浅色背景 */
-    transition: width 0.4s ease;
 }
 
 /*************** chat top container ************/
