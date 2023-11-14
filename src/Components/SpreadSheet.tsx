@@ -41,6 +41,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [serverSelected, setServerSelected] = useState("renderhost");
   const [showLogin, setShowLogin] = useState(false);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [newMessagesCount, setNewMessagesCount] = useState(0);
 
 
   function updateDisplayValues(): void {
@@ -101,9 +103,20 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     </nav>
   }
 
+  function showChatWindow() {
+    return <nav className={`${newMessagesCount > 0 ? 'notification-badge' : ''}`}> 
+      <button className={`create-sheet-label `} onClick={
+        () => {
+            setShowChat(!showChat)
+            setNewMessagesCount(0)
+          }
+        }>CHAT</button>
+        {newMessagesCount > 0 && !showChat && <span className="badge">{newMessagesCount}</span>}
+    </nav>
+  }
+
   function createNewSheet() {
     return <nav>
-
     <button className="create-sheet-label" onClick={() => (setShowCreateSheet(true))}>NEW</button>
     {showCreateSheet && (
       <div className="login-modal">
@@ -128,7 +141,6 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         </div>
       </div>)}
   </nav>
-
 } 
 
   function checkUserName(): boolean {
@@ -260,6 +272,14 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     return spreadSheetClient.getCellsBeingEdited(fileName);
   }
 
+  function handleToggle(action: string) {
+    if (action === "add") {
+      setNewMessagesCount((prevCount) => prevCount + 1);
+    } else if (action === "clear") {
+      setNewMessagesCount(0);
+    }
+  }
+
   return (
     <div className="page">
       <div className="bar-container">
@@ -268,7 +288,9 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           {createNewSheet()}
           <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
           {getUserLogin()}
+          {showChatWindow()}
           {showLoginUser()}
+          
         </div>
       <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
@@ -282,7 +304,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           currentlyEditing={currentlyEditing}></KeyPad>
       </div>
       <div className="chat">
-        <ChatPad userName={userName} chatClient={chatClient}></ChatPad>
+        <ChatPad userName={userName} chatClient={chatClient} show={showChat} handleToggle={handleToggle}></ChatPad>
       </div>
     </div>
   )

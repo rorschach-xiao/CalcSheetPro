@@ -1,7 +1,7 @@
 .create-sheet-label {
     margin-right: 10px;
     font-family: "Gill Sans", sans-serif; 
-    font-size: 17px;
+    font-size: 20px;
     background-color:  #ffffff00;
     height: 100%;
     width: 100%;
@@ -20,7 +20,7 @@
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     background-color:  #f0f0f0;
-    color: #fff;
+    color: #020202;
     width: 100%;
     border-bottom: #020202;
     grid-area: head;
@@ -32,7 +32,7 @@
     align-items: right;
     justify-content: right;
     color: #020202;
-    padding-top: 30px;
+    padding-top: 35px;
     width: 100%;
     height: 100%;
 }
@@ -92,7 +92,7 @@
     "head head"
     "sheet chat"
     "sheet chat";
-    grid-template-rows: 72px 4fr;
+    grid-template-rows: 74px 4fr;
     grid-template-columns: 3fr auto;
     height: 100%;
     width: 100%;
@@ -102,9 +102,28 @@
     grid-area: chat;
 }
 
+.notification-badge {
+  position: relative; 
+  display: inline-block;
+}
+
+.notification-badge > .badge {
+  position: absolute;
+  top: 7%;
+  left: 70%;
+  background-color: rgb(240, 25, 25);
+  color: rgb(5, 5, 5);
+  border-radius: 50%;
+  padding: 3px 5px;
+  font-size: 8px;
+  z-index: 1000;
+}
+
+
 nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #f0f0f0;
-  }
+}
+
