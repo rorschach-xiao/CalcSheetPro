@@ -62,21 +62,6 @@
     fill: #fbfafa;
 }
 
-.notification-badge {
-    position: relative;
-    display: inline-block;
-  }
-
-.notification-badge .badge {
-position: absolute;
-top: -7px;
-left: -6px;
-background-color: rgb(240, 25, 25);
-color: white;
-border-radius: 50%;
-padding: 3px 5px;
-font-size: 8px;
-}
 
 /*************** chat window container ************/
 .chat-window {
