@@ -6,6 +6,8 @@ import './ChatPad.css';
 interface ChatPadProps {
     userName: string;
     chatClient: ChatClient;
+    show: boolean;
+    handleToggle: (action: string) => void;
 }
 
 interface ClientMessageProp {
@@ -18,19 +20,24 @@ interface ClientMessageProp {
 const vancouverTimezone = "America/Vancouver";
 const options = { timeZone: vancouverTimezone, hour12: false };
 
-function ChatPad({userName, chatClient}: ChatPadProps) {
+function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
   const [chatLog, setChatLog] = useState<ClientMessageProp[]>([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [newMessagesCount, setNewMessagesCount] = useState(0);
+  // const [newMessagesCount, setNewMessagesCount] = useState(0);
+
+  useEffect(() => {
+    setSidebarOpen(show);
+  } ,[show])
 
   const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-    setNewMessagesCount(0);
+    setSidebarOpen(false);
+    handleToggle("clear");
   };
 
   const onMessageReceived = (msg: ClientMessageProp) => {
     setChatLog((prevLog) => [...prevLog, msg]);
-    setNewMessagesCount((prevCount) => prevCount + 1);
+    // setNewMessagesCount((prevCount) => prevCount + 1);
+    handleToggle("add")
   };
 
   const onHistoryMessageReceived = (msgs: ClientMessageProp[]) => {
@@ -89,30 +96,30 @@ function ChatPad({userName, chatClient}: ChatPadProps) {
   }
 
   function getChatTopContainer() {
-    if (isSidebarOpen) {
-      return (<div className='chat-top-container'>
-                <button onClick={toggleSidebar} className='close-button'>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                    <path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"/>
-                  </svg>
+    //if (isSidebarOpen) {
+    return (<div className={`chat-top-container ${isSidebarOpen} ? "": "close"`}>
+              <button onClick={toggleSidebar} className='close-button'>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                  <path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"/>
+                </svg>
 
-                </button>
-                <button onClick={() => chatClient.loadHistoryMessage()}>Load More</button>
-              </div>)
-    }
-    else {
-      return (
-        <div className='chat-top-container close'>
-          <button onClick={toggleSidebar} className={`open-button ${newMessagesCount > 0 ? 'notification-badge' : ''}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z"/>
-            </svg>
-            {newMessagesCount > 0 && <span className="badge">{newMessagesCount}</span>}
+              </button>
+              <button onClick={() => chatClient.loadHistoryMessage()}>{`${isSidebarOpen?"Load More":""}`}</button>
+            </div>)
+    //}
+    // else {
+    //   return (
+    //     <div className='chat-top-container close'>
+    //       <button onClick={toggleSidebar} className={`open-button ${newMessagesCount > 0 ? 'notification-badge' : ''}`}>
+    //         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+    //           <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z"/>
+    //         </svg>
+    //         {newMessagesCount > 0 && <span className="badge">{newMessagesCount}</span>}
             
-          </button>
-        </div>
-      );
-    }
+    //       </button>
+    //     </div>
+    //   );
+    // }
   }
 
   return (
@@ -120,10 +127,6 @@ function ChatPad({userName, chatClient}: ChatPadProps) {
       {getChatTopContainer()}
       <div className={`chat-window ${isSidebarOpen ? '' : 'close'}`}>
         {chatLog.map((msgObj, index) => (
-          // <div className='chat-message' key={index}>
-          //   <div className='user'>{`${msgObj.user} [${msgObj.timestamp.toLocaleString('en-US')}]`}</div>
-          //   <div className='message'>{msgObj.msg}</div>
-          // </div>
           getChatScopes(msgObj, index)
         ))}
       </div>
