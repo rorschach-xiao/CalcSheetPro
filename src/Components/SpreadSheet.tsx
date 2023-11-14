@@ -12,6 +12,7 @@ import ServerSelector from "./ServerSelector";
 import ChatPad from "./ChatPad";
 
 import "./SpreadSheet.css";
+import ChatClient from "../Engine/ChatClient";
 
 
 interface SpreadSheetProps {
@@ -26,6 +27,7 @@ interface SpreadSheetProps {
 
 // create the client that talks to the backend.
 const spreadSheetClient = new SpreadSheetClient('test', 'juancho');
+const chatClient = new ChatClient("Yang");
 
 function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
@@ -61,6 +63,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function getUserLogin() {
     return <div>
+      <label className="create-sheet-label">SIGN IN</label>
       <input
         type="text"
         placeholder="User name"
@@ -82,7 +85,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function createNewSheet() {
     return <div >
-    <label className="create-sheet-label">CREATE A SHEET</label>
+    <label className="create-sheet-label">NEW</label>
     <input
       type="text"
       placeholder="Sheet Name"
@@ -177,6 +180,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   function serverSelector(buttonName: string) {
     setServerSelected(buttonName);
     spreadSheetClient.setServerSelector(buttonName);
+    chatClient.setServerSelector(buttonName);
   }
 
 
@@ -231,9 +235,14 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
 
   return (
-      <div>
-        <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
-        {createNewSheet()}
+    <div className="page">
+      <div className="bar-container">
+          <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
+          {createNewSheet()}
+          <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
+          {getUserLogin()}
+        </div>
+      <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
         <Status statusString={statusString}></Status>
         {<SheetHolder cellsValues={cells}
@@ -243,10 +252,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         <KeyPad onButtonClick={onButtonClick}
           onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={currentlyEditing}></KeyPad>
-        {getUserLogin()}
-        <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
-        <ChatPad userName={userName}></ChatPad>
       </div>
+      <div className="chat">
+        <ChatPad userName={userName} chatClient={chatClient}></ChatPad>
+      </div>
+    </div>
   )
 };
 
