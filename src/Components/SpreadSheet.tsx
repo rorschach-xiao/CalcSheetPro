@@ -85,7 +85,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function createNewSheet() {
     return <div >
-    <label className="create-sheet-label">CREATE A SHEET</label>
+    <label className="create-sheet-label">NEW</label>
     <input
       type="text"
       placeholder="Sheet Name"
@@ -235,13 +235,14 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
 
   return (
-      <div className="sheet">
-        <div className="container">
+    <div className="page">
+      <div className="bar-container">
           <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
           {createNewSheet()}
           <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
           {getUserLogin()}
         </div>
+      <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
         <Status statusString={statusString}></Status>
         {<SheetHolder cellsValues={cells}
@@ -251,8 +252,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
         <KeyPad onButtonClick={onButtonClick}
           onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={currentlyEditing}></KeyPad>
+      </div>
+      <div className="chat">
         <ChatPad userName={userName} chatClient={chatClient}></ChatPad>
       </div>
+    </div>
   )
 };
 
