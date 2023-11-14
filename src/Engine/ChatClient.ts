@@ -55,7 +55,7 @@ class ChatClient {
             const messageObj: ClientMessageProp = {user: this._userName, msg: message, timestamp: currentTime}
             this._socket.emit('send_message', messageObj);
         } else if (this._userName === "") {
-            alert("Please enter a user name!");
+            alert("Please sign in first");
         } else {
             alert("Please connect to the server first!");
         }
@@ -65,7 +65,7 @@ class ChatClient {
         if (this._socket && this._userName !== "") {
             this._socket.emit('request_history');
         } else if (this._userName === "") {
-            alert("Please enter a user name!");
+            alert("Please sign in first");
         } else {    
             alert("Please connect to the server first!");
         }

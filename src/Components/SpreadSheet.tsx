@@ -13,7 +13,7 @@ import ChatPad from "./ChatPad";
 
 import "./SpreadSheet.css";
 import ChatClient from "../Engine/ChatClient";
-
+import Image from "../Images/logo.png";
 
 interface SpreadSheetProps {
   documentName: string;
@@ -39,6 +39,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [fileName, setFileName] = useState(documentName);
   const [serverSelected, setServerSelected] = useState("renderhost");
+  const [showLogin, setShowLogin] = useState(false);
+  const [showCreateSheet, setShowCreateSheet] = useState(false);
 
 
   function updateDisplayValues(): void {
@@ -62,51 +64,76 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
 
   function getUserLogin() {
-    return <div>
-      <label className="create-sheet-label">SIGN IN</label>
-      <input
-        type="text"
-        placeholder="User name"
-        defaultValue={userName}
-        id="inputName"
-      />
-      <button onClick={() => {
-          // get the text from the input
-          let inputElement: HTMLInputElement = document.getElementById('inputName') as HTMLInputElement;
-          let userName = inputElement!.value;
-          window.sessionStorage.setItem('userName', userName);
-          // set the user name
-          setUserName(userName);
-          spreadSheetClient.userName = userName;
-        }}>Login</button>
-    </div>
+    return <nav>
+      <button className="create-sheet-label " onClick={() => (setShowLogin(true))}>SIGN IN</button>
+        {showLogin && (
+          <div className="create-sheet-modal">
+            <div className="modal-content">
+              <label >UserName:</label>
+              <input
+                type="text"
+                placeholder="User name"
+                defaultValue={userName}
+                id="inputName"
+              />
+              <button onClick={() => {
+                // get the text from the input
+                let inputElement: HTMLInputElement = document.getElementById('inputName') as HTMLInputElement;
+                let userName = inputElement!.value;
+                window.sessionStorage.setItem('userName', userName);
+                // set the user name
+                setUserName(userName);
+                spreadSheetClient.userName = userName;
+                setShowLogin(false);
+              }}>Login</button>
+              <button onClick={() => {setShowLogin(false)}}>close</button>
+            </div>
+          </div>
+        )}
+    </nav>
+  }
 
+  function showLoginUser() {
+    return <nav> 
+      <div className="login-user">
+        <label className=" create-sheet-label">{userName}</label>
+      </div>
+    </nav>
   }
 
   function createNewSheet() {
-    return <div >
-    <label className="create-sheet-label">NEW</label>
-    <input
-      type="text"
-      placeholder="Sheet Name"
-      id="inputSheetName"
-    />
-    <button onClick={() => {
-        // get the text from the input
-        let inputElement: HTMLInputElement = document.getElementById('inputSheetName') as HTMLInputElement;
-        let sheetName = inputElement!.value;
-        window.sessionStorage.setItem('sheetName', sheetName);
-        // set the sheet name
-        setFileName(sheetName)
-        spreadSheetClient.documentName = sheetName;
-      }}>Create</button>
-  </div>
+    return <nav>
+
+    <button className="create-sheet-label" onClick={() => (setShowCreateSheet(true))}>NEW</button>
+    {showCreateSheet && (
+      <div className="login-modal">
+        <div className="modal-content">
+            <label>Input Sheet Name:</label>
+            <input
+              type="text"
+              placeholder="Sheet Name"
+              id="inputSheetName"
+            />
+            <button onClick={() => {
+                // get the text from the input
+                let inputElement: HTMLInputElement = document.getElementById('inputSheetName') as HTMLInputElement;
+                let sheetName = inputElement!.value;
+                window.sessionStorage.setItem('sheetName', sheetName);
+                // set the sheet name
+                setFileName(sheetName)
+                spreadSheetClient.documentName = sheetName;
+                setShowCreateSheet(false);
+              }}>Create</button>
+            <button onClick={() => {setShowCreateSheet(false)}}>close</button>
+        </div>
+      </div>)}
+  </nav>
 
 } 
 
   function checkUserName(): boolean {
     if (userName === "") {
-      alert("Please enter a user name");
+      alert("Please sign in first");
       return false;
     }
     return true;
@@ -194,7 +221,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   function onCellClick(event: React.MouseEvent<HTMLButtonElement>): void {
 
     if (userName === "") {
-      alert("Please enter a user name");
+      alert("Please sign in first");
       return;
     }
     const cellLabel = event.currentTarget.getAttribute("cell-label");
@@ -236,10 +263,12 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   return (
     <div className="page">
       <div className="bar-container">
+          <img className="img-header" src={Image} alt="logo"/>
           <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
           {createNewSheet()}
           <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
           {getUserLogin()}
+          {showLoginUser()}
         </div>
       <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
