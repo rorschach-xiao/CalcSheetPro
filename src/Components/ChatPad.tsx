@@ -52,7 +52,7 @@ function ChatPad({userName, chatClient}: ChatPadProps) {
     return () => {
       chatClient.disconnect();
     }
-  }, [chatClient.server]);
+  }, []);
 
   // change the user name
   useEffect(() => {

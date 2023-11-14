@@ -180,7 +180,6 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   function serverSelector(buttonName: string) {
     setServerSelected(buttonName);
     spreadSheetClient.setServerSelector(buttonName);
-    chatClient.setServerSelector(buttonName);
   }
 
 
