@@ -1,6 +1,23 @@
+.chat-container.close {
+  position: absolute; 
+  height: 100%;
+  width: 60px;
+  right: 0;
+  overflow: hidden;
+  transition: width 0.5s ease;
+  background-color: #282c34;
+  display: grid;
+  grid-template-areas: 
+     "chat-top";
+  grid-template-rows: 40px;
+  border: 2px solid rgba(255, 0, 0, 0);
+
+  
+}
+
 .chat-container {
-    width: 700px;  /* 固定宽度 */
-    height: 400px; /* 固定高度 */
+    width: 400px;  /* 固定宽度 */
+    height: 100%; /* 固定高度 */
     border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
@@ -9,19 +26,80 @@
     font-size: 14px; /* 设定字体大小 */
     color: #333; /* 深色文本 */
     background-color: #f9f9f9; /* 浅色背景 */
+    transition: width 0.4s ease;
 }
 
+/*************** chat top container ************/
+.chat-top-container {
+    display: grid;
+    grid-template-columns: 40px 4fr;
+    gap: 5px;
+    height: 30px;
+    padding: 4px 4px 4px 4px;
+    margin-bottom: 10px; 
+    grid-area: chat-top;
+}
+
+.chat-top-container.close {
+    position: absolute;
+    display: grid;
+    height: 30px;
+    grid-area: chat-top;
+    
+}
+
+.close-button {
+    height: 100%;
+    opacity: 0.7;
+    border: 2px solid rgba(255, 0, 0, 0);
+}
+
+.open-button {
+    height: 100%;
+    opacity: 0.7;
+    border: 2px solid rgba(255, 0, 0, 0);
+    background-color: #14161a;
+    color: #fbfafa;
+    fill: #fbfafa;
+}
+
+.notification-badge {
+    position: relative;
+    display: inline-block;
+  }
+
+.notification-badge .badge {
+position: absolute;
+top: -7px;
+left: -6px;
+background-color: rgb(240, 25, 25);
+color: white;
+border-radius: 50%;
+padding: 3px 5px;
+font-size: 8px;
+}
+
+/*************** chat window container ************/
 .chat-window {
-    flex: 1;
+    /* flex: 1; */
     overflow-y: auto; /* 消息多时可滚动 */
     padding: 10px;
     border-bottom: 1px solid #ccc;
     padding: 5px 10px; /* 消息内边距 */
-    background-color: #fff; /* 消息背景颜色 */
+    background-color: #f7f4f4; /* 消息背景颜色 */
     border-radius: 4px; /* 圆角 */
     line-height: 1.4; /* 行高 */
     box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 轻微的阴影增加层次感 */
     text-align: left;
+    height: 90%;
+    grid-area: chat-window;
+}
+
+.chat-window.close {
+    position: absolute;
+    display: none;
+    width: 0px;
+    height: 0px;
 }
 .chat-message-other {
     margin: 10px; /* 为每个聊天消息添加间距 */
@@ -63,23 +141,29 @@
     display: inline-block;
     max-width: 70%;
 }
-  
+
+/*************** chat input container ************/
 .chat-input-container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 5px;
     padding: 4px 4px 4px 4px;
-    margin-bottom: 10px; 
+    margin-bottom: 5px; 
+    grid-area: chat-input;
+}
+.chat-input-container.close {
+    position: absolute;
+    display: none;
+    width: 0px;
+    height: 0px;
 }
 
 .messageInput {
     flex: 1;
     padding: 5px;
     border: 1px solid #ccc;
-    width: 80%;
-    height: 100%;
 }
 
 .sendButton {
-    margin-left: 5px;
-    padding: 5px 10px;
-    width: 10%;
     height: 100%;
 }
