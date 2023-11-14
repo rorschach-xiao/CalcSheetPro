@@ -16,8 +16,8 @@
 }
 
 .chat-container {
-    width: 400px;  /* 固定宽度 */
-    height: 100%; /* 固定高度 */
+    width: 400px;  
+    height: 110vh; 
     border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@ font-size: 8px;
 
 /*************** chat window container ************/
 .chat-window {
-    /* flex: 1; */
+    flex: 1;
     overflow-y: auto; /* 消息多时可滚动 */
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -91,7 +91,6 @@ font-size: 8px;
     line-height: 1.4; /* 行高 */
     box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 轻微的阴影增加层次感 */
     text-align: left;
-    height: 90%;
     grid-area: chat-window;
 }
 
