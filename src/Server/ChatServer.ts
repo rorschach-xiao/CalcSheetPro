@@ -13,6 +13,8 @@ interface MessageProp {
 
 
 const app = express();
+app.use(express.json());
+
 const server = http.createServer(app);
 const io = new Server(server, {serveClient: false, cors: {
     origin: "*",
@@ -28,6 +30,20 @@ const redis = new Redis({
       const delay = Math.min(times * 50, 2000);
       return delay;
     },
+});
+
+// reset database
+app.get('/reset', async (req, res) => {
+    await redis.flushall();
+    res.send('Reset');
+});
+
+// get database size
+app.get('/dbSize', async (req, res) => {
+    const length = await redis.xlen("chat");
+    console.log("sizeeeeeeeee " + length);
+    console.log(typeof(length));
+    res.json({length});
 });
 
 io.on('connection', (socket) => {
@@ -150,5 +166,5 @@ io.on('connection', (socket) => {
 const port = PortsGlobal.chatServerPort;
 
 server.listen(port, () => {
-    console.log(`listening on *: ${port}`);
+    console.log(`chat server listening on *: ${port}`);
 });
