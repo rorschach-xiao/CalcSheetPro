@@ -19,6 +19,7 @@
 .bar-container {
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100%;
     background-color:  #f0f0f0;
     color: #020202;
     width: 100%;
@@ -75,8 +76,8 @@
   
 
 .img-header {
-    width: 72px;
-    height: 72px;
+    width: 100%;
+    height: 100%;
 }
 
 .sheet {
@@ -92,7 +93,7 @@
     "head head"
     "sheet chat"
     "sheet chat";
-    grid-template-rows: 74px 4fr;
+    grid-template-rows: 7% 4fr;
     grid-template-columns: 3fr auto;
     height: 100%;
     width: 100%;
@@ -125,5 +126,6 @@ nav {
     align-items: center;
     justify-content: space-between;
     background-color: #f0f0f0;
+    height: 100%;
 }
 
