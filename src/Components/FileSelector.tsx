@@ -31,7 +31,7 @@ const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName}) => 
 
     function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
         onFileSelect(e.currentTarget.value, userName);
-        
+        setSelectedFile(e.currentTarget.value);
     }
 
     return (
@@ -40,7 +40,7 @@ const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName}) => 
                 <div className="dropdown-trigger">OPEN</div>
                 <div className="dropdown-menu">
                 {files.map(f => (
-                    <button value={f} onClick={handleButtonClick}>{f}</button>  
+                    <button value={f} onClick={handleButtonClick} className={`${selectedFile === f ? "selected":"not-selected"}`}>{f}</button>  
                 ))}
                 </div>
             </div>

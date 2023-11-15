@@ -49,9 +49,9 @@ function ServerSelector({ serverSelector, serverSelected }: ServerSelectorProps)
             <div className="dropdown-trigger">SERVER</div>
             <div className="dropdown-menu">
                 <button key="localhost" value="localhost" onClick={handleButtonClick} 
-                className={`${serverSelected=='localhost'?"selected":""}`}>localhost</button>
+                className={`${serverSelected=='localhost'?"selected":"not-selected"}`}>localhost</button>
                 <button key="renderhost" value="renderhost" onClick={handleButtonClick}
-                className={`${serverSelected=='renderhost'?"selected":""}`}>renderhost</button>
+                className={`${serverSelected=='renderhost'?"selected":"not-selected"}`}>renderhost</button>
             </div>
         </div>
         

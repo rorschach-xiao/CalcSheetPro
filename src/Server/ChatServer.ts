@@ -39,6 +39,8 @@ io.on('connection', (socket) => {
 
     let startId: string;
     let reachEnd: boolean = false;
+    // send 20 history messages by default
+    sendHistoryMessage();
 
     // -------------------- Message Publisher -------------------- //
     socket.on('send_message', async (message: MessageProp) => {
@@ -85,6 +87,35 @@ io.on('connection', (socket) => {
     listenForMessage();
 
     // -------------------- Message History -------------------- //
+    async function sendHistoryMessage() {
+        if (startId === undefined) {
+            await getStartId();
+        }
+        // get last 20 messages
+        const messages = await redis.xrevrange("chat", startId, "-", "COUNT", "20");
+        // check if there are more messages
+        if (messages.length < 20) {
+            reachEnd = true;
+        } else {
+            const pre_messages = await redis.xrevrange("chat", messages[messages.length - 1][0], "-", "COUNT", "2");
+            if (pre_messages.length < 2) {
+                reachEnd = true;
+            } else {
+                startId = pre_messages[1][0];
+            }
+        }
+        const messageObjs: MessageProp[] = [];
+        messages.reverse();
+        messages.forEach((message: any) => {
+            const user = message[1][1];
+            const timestamp = message[1][3];
+            const msg = message[1][5];
+            const messageObj: MessageProp = {user: user, timestamp: timestamp, msg: msg};
+            messageObjs.push(messageObj);
+        });
+        socket.emit('history_message', messageObjs);
+    }
+
     async function getStartId() {
         const allMessages = await redis.xrange("chat", "-", "+");
         if (allMessages.length === 0) {
@@ -112,29 +143,7 @@ io.on('connection', (socket) => {
                 return;
             }
         }
-        // get last 20 messages
-        const messages = await redis.xrevrange("chat", startId, "-", "COUNT", "20");
-        // check if there are more messages
-        if (messages.length < 20) {
-            reachEnd = true;
-        } else {
-            const pre_messages = await redis.xrevrange("chat", messages[messages.length - 1][0], "-", "COUNT", "2");
-            if (pre_messages.length < 2) {
-                reachEnd = true;
-            } else {
-                startId = pre_messages[1][0];
-            }
-        }
-        const messageObjs: MessageProp[] = [];
-        messages.reverse();
-        messages.forEach((message: any) => {
-            const user = message[1][1];
-            const timestamp = message[1][3];
-            const msg = message[1][5];
-            const messageObj: MessageProp = {user: user, timestamp: timestamp, msg: msg};
-            messageObjs.push(messageObj);
-        });
-        socket.emit('history_message', messageObjs);
+        sendHistoryMessage();
     });
 
     // -------------------- Disconnect -------------------- //

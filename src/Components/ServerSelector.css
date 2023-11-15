@@ -21,13 +21,18 @@
     width: 100%;
 }
 
-.dropdown-menu > button {
+.dropdown-menu > .not-selected {
     width: 100%;
     font-size: 15px;
     background-color: rgb(243, 244, 245);
-    border-radius: 10%;
- 
 }
+.dropdown-menu > .selected {
+    width: 100%;
+    font-size: 15px;
+    background-color: rgb(40, 62, 86);
+    color: #f1eeee;
+}
+
 .dropdown-menu > button:hover {
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.4);
 }
