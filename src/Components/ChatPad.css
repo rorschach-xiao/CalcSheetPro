@@ -1,23 +1,20 @@
 .chat-container.close {
-  position: absolute; 
-  height: 110vh;
+  position: absolute;
+  height: 60%;
   width: 0px;
-  right: -4px;
+  right: -5px;
   overflow: hidden;
   transition: width 0.2s ease;
   background-color: #f9f9f9; 
   display: grid;
-  grid-template-areas: 
+  /* grid-template-areas: 
      "chat-top";
-  grid-template-rows: 40px;
-  border: 2px solid rgba(255, 0, 0, 0);
-
-  
+  grid-template-rows: 40px; */
 }
 
 .chat-container {
     width: 400px;  
-    height: 120vh; 
+    height: 100%; 
     border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
