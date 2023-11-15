@@ -98,7 +98,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   function showLoginUser() {
     return <nav> 
       <div className="login-user">
-        <label className=" create-sheet-label">{userName}</label>
+        <label className="login-user-span">{userName}</label>
       </div>
     </nav>
   }
