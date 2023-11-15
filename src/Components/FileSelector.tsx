@@ -7,8 +7,9 @@ interface Props {
     fetchFiles: () => Promise<string[]>;
     onFileSelect: (filename: string, userName: string) => void;
     userName: string;
+    currentFile: string;
 }
-const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName}) => {
+const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName, currentFile}) => {
 
     const [files, setFiles] = useState<string[]>([]);
     const [selectedFile, setSelectedFile] = useState('');
@@ -18,6 +19,9 @@ const FileSelector: React.FC<Props> = ({fetchFiles, onFileSelect, userName}) => 
         //setFiles(f);
     }, [fetchFiles]);
   
+    useEffect(() => {
+        setSelectedFile(currentFile);
+    }, [currentFile]);
     // function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     //     onFileSelect(e.target.value, userName);
     //     const selectedValue = e.target.value;
