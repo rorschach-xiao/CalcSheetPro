@@ -58,6 +58,13 @@
     },
     {
       "type": "node-terminal",
+      "name": "Test Chat Server",
+      "request": "launch",
+      "command": "npm run test-chat-server",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node-terminal",
       "name": "Run test suite for server",
       "request": "launch",
       "command": "ts-node src/Server/DocumentServerTester.ts",
