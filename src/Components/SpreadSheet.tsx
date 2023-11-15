@@ -67,8 +67,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function getUserLogin() {
     return <nav>
-      <button className="create-sheet-label " onClick={() => (setShowLogin(true))}>SIGN IN</button>
-        {showLogin && (
+      <button className="create-sheet-label " onClick={() => {setShowLogin(true); setShowCreateSheet(false);}}>SIGN IN</button>
+        {showLogin && !showCreateSheet &&(
           <div className="create-sheet-modal">
             <div className="modal-content">
               <label >UserName:</label>
@@ -117,8 +117,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function createNewSheet() {
     return <nav>
-    <button className="create-sheet-label" onClick={() => (setShowCreateSheet(true))}>NEW</button>
-    {showCreateSheet && (
+    <button className="create-sheet-label" onClick={() => {setShowCreateSheet(true); setShowLogin(false);}}>NEW</button>
+    {showCreateSheet && !showLogin &&(
       <div className="login-modal">
         <div className="modal-content">
             <label>Input Sheet Name:</label>
@@ -128,6 +128,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
               id="inputSheetName"
             />
             <button onClick={() => {
+                if (userName === "") {
+                  alert("Please sign in first");
+                  setShowCreateSheet(false);
+                  return;
+                }
                 // get the text from the input
                 let inputElement: HTMLInputElement = document.getElementById('inputSheetName') as HTMLInputElement;
                 let sheetName = inputElement!.value;
