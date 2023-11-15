@@ -14,6 +14,7 @@ import ChatPad from "./ChatPad";
 import "./SpreadSheet.css";
 import ChatClient from "../Engine/ChatClient";
 import Image from "../Images/logo.png";
+import SheetComponent from "./SheetComponent";
 
 interface SpreadSheetProps {
   documentName: string;
@@ -290,7 +291,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     <div className="page">
       <div className="bar-container">
           <img className="img-header" src={Image} alt="logo"/>
-          <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} />
+          <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} currentFile={fileName}/>
           {createNewSheet()}
           <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
           {getUserLogin()}
