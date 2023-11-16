@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ChatClient from '../Engine/ChatClient';
 import './ChatPad.css';
 
@@ -23,6 +23,9 @@ const options = { timeZone: vancouverTimezone, hour12: false };
 function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
   const [chatLog, setChatLog] = useState<ClientMessageProp[]>([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [newMessageFlag, setNewMessageFlag] = useState(false);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const topRef = useRef<HTMLDivElement | null>(null);
   // const [newMessagesCount, setNewMessagesCount] = useState(0);
 
   useEffect(() => {
@@ -38,6 +41,7 @@ function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
     setChatLog((prevLog) => [...prevLog, msg]);
     // setNewMessagesCount((prevCount) => prevCount + 1);
     handleToggle("add")
+    setNewMessageFlag(true);
   };
 
   const onHistoryMessageReceived = (msgs: ClientMessageProp[]) => {
@@ -48,8 +52,12 @@ function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
         msgs.splice(msgs.indexOf(msg), 1);
       }
     });
-
+    setNewMessageFlag(false);
     setChatLog((prevlog) => [...msgs, ...prevlog]);
+    // scroll to the top of the chat window
+    if (topRef.current) {
+      topRef.current.scrollIntoView({behavior: "smooth", block: "start"});
+    }
   };
 
   // initialize the chat client connenction
@@ -65,6 +73,13 @@ function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
   useEffect(() => {
     chatClient.userName = userName;
   }, [userName]);
+
+  // scroll to the bottom of the chat window
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth", block: "end"});
+    }
+  }, [chatLog]);
   
   const handleSendMessage = () => {
     // get the text from the input
@@ -80,18 +95,36 @@ function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
   };
 
   function getChatScopes(msgObj: ClientMessageProp, index: number) {
-    if (msgObj.user === userName) { // current user
-      return (<div className='chat-message-current' key={index}>
-                <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
-                <div className='message-current'>{msgObj.msg}</div>
-              </div>);
-    } else if (msgObj.user === "System" && msgObj.msg === "[WARNING] No more history messages") {
-      return;
-    } else{ // message from other users
-      return (<div className='chat-message-other' key={index}>
-                <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
-                <div className='message-other'>{msgObj.msg}</div>
-              </div>);
+    if (newMessageFlag) {
+      const isLastMessage = index === chatLog.length - 1;
+      if (msgObj.user === userName) { // current user
+        return (<div className='chat-message-current' key={index} ref={isLastMessage ? bottomRef : null}>
+                  <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
+                  <div className='message-current'>{msgObj.msg}</div>
+                </div>);
+      } else if (msgObj.user === "System" && msgObj.msg === "[WARNING] No more history messages") {
+        return;
+      } else{ // message from other users
+        return (<div className='chat-message-other' key={index} ref={isLastMessage ? bottomRef : null}>
+                  <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
+                  <div className='message-other'>{msgObj.msg}</div>
+                </div>);
+      }
+    } else {
+      const isFirstMessage = index === 0;
+      if (msgObj.user === userName) { // current user
+        return (<div className='chat-message-current' key={index} ref={isFirstMessage ? bottomRef : null}>
+                  <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
+                  <div className='message-current'>{msgObj.msg}</div>
+                </div>);
+      } else if (msgObj.user === "System" && msgObj.msg === "[WARNING] No more history messages") {
+        return;
+      } else{ // message from other users
+        return (<div className='chat-message-other' key={index} ref={isFirstMessage ? bottomRef : null}>
+                  <div className='user'>{`${msgObj.user} [${msgObj.timestamp}]`}</div>
+                  <div className='message-other'>{msgObj.msg}</div>
+                </div>);
+      }
     }
   }
 
