@@ -38,20 +38,11 @@ app.get('/reset', async (req, res) => {
     res.send('Reset');
 });
 
-// get database size
-app.get('/dbSize', async (req, res) => {
-    const length = await redis.xlen("chat");
-    console.log("sizeeeeeeeee " + length);
-    console.log(typeof(length));
-    res.json({length});
-});
 
 io.on('connection', (socket) => {
     console.log(`A user connected:${socket.id}}`);
-
     let sub: Redis| null = new Redis();
     let pub: Redis| null = new Redis();
-
     let startId: string;
     let reachEnd: boolean = false;
 
@@ -150,6 +141,22 @@ io.on('connection', (socket) => {
             messageObjs.push(messageObj);
         });
         socket.emit('history_message', messageObjs);
+    });
+
+    // -------------------- Database Size -------------------- //
+    socket.on('db_size', async () => {
+        try {
+            
+            const dbSize = await redis.xlen("chat");
+            console.log("Database Size: " + dbSize);
+
+           
+            socket.emit('db_size_response', { size: dbSize });
+        } catch (error) {
+            console.error("Error getting database size:", error);
+            
+            socket.emit('db_size_response', { error: "Error getting database size" });
+        }
     });
 
     // -------------------- Disconnect -------------------- //
