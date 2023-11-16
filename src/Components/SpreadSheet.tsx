@@ -283,6 +283,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
       setNewMessagesCount((prevCount) => prevCount + 1);
     } else if (action === "clear") {
       setNewMessagesCount(0);
+      setShowChat(false);
     }
   }
 
