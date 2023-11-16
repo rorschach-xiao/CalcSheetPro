@@ -105,7 +105,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   }
 
   function showChatWindow() {
-    return <nav className={`${newMessagesCount > 0 ? 'notification-badge' : ''}`}> 
+    return <nav className={`${newMessagesCount > 0 && !showChat ? 'notification-badge' : ''}`}> 
       <button className={`create-sheet-label `} onClick={
         () => {
             setShowChat(!showChat)
@@ -281,7 +281,9 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
 
   function handleToggle(action: string) {
     if (action === "add") {
-      setNewMessagesCount((prevCount) => prevCount + 1);
+      if (!showChat) {
+        setNewMessagesCount((prevCount) => prevCount + 1);
+      }
     } else if (action === "clear") {
       setNewMessagesCount(0);
       setShowChat(false);
