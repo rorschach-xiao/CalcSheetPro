@@ -282,5 +282,5 @@ app.put('/document/clear/formula/:name', (req: express.Request, res: express.Res
 const port = PortsGlobal.serverPort;
 // start the app and test it
 app.listen(port, () => {
-    console.log(`listening on port ${port}`);
+    console.log(`document server listening on port ${port}`);
 });

@@ -148,7 +148,6 @@ io.on('connection', (socket) => {
         try {
             
             const dbSize = await redis.xlen("chat");
-            console.log("Database Size: " + dbSize);
 
            
             socket.emit('db_size_response', { size: dbSize });
