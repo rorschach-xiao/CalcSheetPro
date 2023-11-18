@@ -49,6 +49,10 @@ function ChatPad({userName, chatClient, show, handleToggle, onSignInResponse}: C
   };
 
   const onMessageReceived = (msg: ClientMessageProp) => {
+    if (msg.user === "System" && msg.msg ==="[WARNING] Please sign in first") {
+      alert("Please sign in first!");
+      return;
+    }
     setChatLog((prevLog) => [...prevLog, msg]);
     // setNewMessagesCount((prevCount) => prevCount + 1);
     handleToggle("add")
