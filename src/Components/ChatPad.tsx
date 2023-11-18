@@ -2,13 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 import ChatClient from '../Engine/ChatClient';
 import './ChatPad.css';
 
+interface SignInResponse {
+  user: string,
+  status: number
+}
 
 interface ChatPadProps {
     userName: string;
     chatClient: ChatClient;
     show: boolean;
     handleToggle: (action: string) => void;
+    onSignInResponse: (response: SignInResponse) => void;
 }
+
 
 interface ClientMessageProp {
   user: string,
@@ -20,7 +26,7 @@ interface ClientMessageProp {
 const vancouverTimezone = "America/Vancouver";
 const options = { timeZone: vancouverTimezone, hour12: false };
 
-function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
+function ChatPad({userName, chatClient, show, handleToggle, onSignInResponse}: ChatPadProps) {
   const [chatLog, setChatLog] = useState<ClientMessageProp[]>([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [newMessageFlag, setNewMessageFlag] = useState(false);
@@ -62,7 +68,7 @@ function ChatPad({userName, chatClient, show, handleToggle}: ChatPadProps) {
 
   // initialize the chat client connenction
   useEffect(() => {
-    chatClient.connect(onMessageReceived, onHistoryMessageReceived);
+    chatClient.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse);
     setChatLog([]);
     return () => {
       chatClient.disconnect();

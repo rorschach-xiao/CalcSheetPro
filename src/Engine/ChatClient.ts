@@ -1,12 +1,17 @@
 
 import io from 'socket.io-client';
 import { PortsGlobal, LOCAL_CHAT_SERVER_URL, RENDER_CHAT_SERVER_URL } from '../ServerDataDefinitions';
+import { on } from 'events';
 
 
 interface ClientMessageProp {
     user: string,
     msg: string
     timestamp: string
+}
+interface SignInResponse {
+    user: string,
+    status: number
 }
 
 class ChatClient {
@@ -23,7 +28,8 @@ class ChatClient {
         this._server = 'localhost';
     }
     
-    connect(onMessageReceived: (msg: ClientMessageProp) => void, onHistoryMessageReceived: (msgs: ClientMessageProp[]) => void) {
+    connect(onMessageReceived: (msg: ClientMessageProp) => void, onHistoryMessageReceived: (msgs: ClientMessageProp[]) => void, 
+            onSignInResponse: (response: SignInResponse) => void) {
         this._socket = io(this._serverURL, {
             reconnection: true, 
             reconnectionAttempts: 5, 
@@ -33,6 +39,9 @@ class ChatClient {
             // convert json to string format
             // const msg: string = `${messageObj.user} [${messageObj.timestamp}]: ${messageObj.msg}`;
             onMessageReceived(messageObj);
+        });
+        this._socket.on("sign_in_response", (response: SignInResponse) => {
+            onSignInResponse(response);
         });
         this._socket.on('history_message', (messageObjs: ClientMessageProp[]) => {
             // let msgs: string[] = [];
@@ -45,6 +54,21 @@ class ChatClient {
         this._socket.on('connect', () => {
             console.log(`id: ${this._socket.id}`);
         });
+    }
+
+    signIn(userName: string) {
+        if (this._socket && userName !== "") {
+            this._userName = userName;
+            this._socket.emit('sign_in', this._userName);
+            
+        } else if (userName === "") {
+            alert("Username cannot be empty!");
+            return;
+        } else {
+            alert("Please connect to the server first!");
+            return;
+        }
+        
     }
 
     sendMessage(message: string) {

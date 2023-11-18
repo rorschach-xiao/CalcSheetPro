@@ -31,7 +31,6 @@ const redis = new Redis({
 });
 
 io.on('connection', (socket) => {
-    console.log(`A user connected:${socket.id}}`);
 
     let sub: Redis| null = new Redis();
     let pub: Redis| null = new Redis();
@@ -40,6 +39,24 @@ io.on('connection', (socket) => {
     let reachEnd: boolean = false;
     // send 20 history messages by default
     sendHistoryMessage();
+
+    // -------------------- Sign In -------------------- //
+    socket.on('sign_in', async (userName: string) => {
+        const currentUser = await getUsernameBySocketId(socket.id);
+        if (currentUser !== null && currentUser !== userName) {
+            await redis.hdel("user-socket-map", currentUser);
+            console.log(`user ${currentUser} disconnected`);
+        }
+        const exists = await redis.hexists("user-socket-map", userName);
+        if (exists === 1) {
+            socket.emit('sign_in_response', {user: userName, status: 404});
+        } else {
+            await redis.hset("user-socket-map", userName, socket.id);
+            socket.emit('sign_in_response', {user: userName, status: 200});
+            console.log(`user ${userName} connected: ${socket.id}}`);
+        }
+        
+    });
 
     // -------------------- Message Publisher -------------------- //
     socket.on('send_message', async (message: MessageProp) => {
@@ -146,13 +163,27 @@ io.on('connection', (socket) => {
     });
 
     // -------------------- Disconnect -------------------- //
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
+    socket.on('disconnect', async () => {
+        const currentUser = await getUsernameBySocketId(socket.id);
+        if (currentUser !== null) {
+            await redis.hdel("user-socket-map", currentUser);
+            console.log(`user ${currentUser} disconnected`);
+        }
         sub!.quit();
         pub!.quit();
         sub = null;
         pub = null;
     });
+
+    async function getUsernameBySocketId(socketId: string): Promise<string | null> {
+        const mapping = await redis.hgetall('user-socket-map');
+        for (const username in mapping) {
+          if (mapping[username] === socketId) {
+            return username;
+          }
+        }
+        return null;
+      }
 
 });
 

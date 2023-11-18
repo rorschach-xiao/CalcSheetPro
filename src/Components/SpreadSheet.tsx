@@ -20,6 +20,11 @@ interface SpreadSheetProps {
   documentName: string;
 }
 
+interface SignInResponse {
+  user: string,
+  status: number
+}
+
 /**
  * the main component for the Spreadsheet.  It is the parent of all the other components
  * 
@@ -57,6 +62,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     setCurrentlyEditing(spreadSheetClient.getEditStatus());
   }
 
+  function onSignInResponse(response: SignInResponse) {
+    if (response.status === 200) {
+      setUserName(response.user);
+      spreadSheetClient.userName = response.user;
+      alert(`Congratulation! ${response.user} have signed in successfully!`);
+    } else {
+      alert(`User ${response.user} already signed in!`);
+    }
+  }
+
   // useEffect to refetch the data every 1/20 of a second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -84,9 +99,8 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
                 let inputElement: HTMLInputElement = document.getElementById('inputName') as HTMLInputElement;
                 let userName = inputElement!.value;
                 window.sessionStorage.setItem('userName', userName);
-                // set the user name
-                setUserName(userName);
-                spreadSheetClient.userName = userName;
+                // chat client sign in
+                chatClient.signIn(userName);
                 setShowLogin(false);
               }}>Login</button>
               <button onClick={() => {setShowLogin(false)}}>close</button>
@@ -314,7 +328,11 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           currentlyEditing={currentlyEditing}></KeyPad>
       </div>
       <div className="chat">
-        <ChatPad userName={userName} chatClient={chatClient} show={showChat} handleToggle={handleToggle}></ChatPad>
+        <ChatPad userName={userName} 
+                 chatClient={chatClient} 
+                 show={showChat} 
+                 handleToggle={handleToggle} 
+                 onSignInResponse={onSignInResponse}></ChatPad>
       </div>
     </div>
   )
