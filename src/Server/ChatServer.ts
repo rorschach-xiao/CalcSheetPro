@@ -73,14 +73,13 @@ io.on('connection', (socket) => {
         if (startId === undefined) {
             await getStartId();
         }
-        // add new message to Redis chat stream
-        await pub!.xadd("chat", "*", "username", message.user,
-                                "timestamp", message.timestamp.toString(),
-                                "message", message.msg);
-        const chatLength = await redis.xlen("chat");
         // check if the user in the user-socket-map
         const exists = await redis.hexists("user-socket-map", message.user);
         if (exists === 1) {
+            // add new message to Redis chat stream
+            await pub!.xadd("chat", "*", "username", message.user,
+                                        "timestamp", message.timestamp.toString(),
+                                         "message", message.msg);
             const chatLength = await redis.xlen("chat");
             // trim chat stream to 200 messages
             if (chatLength > 200) {
