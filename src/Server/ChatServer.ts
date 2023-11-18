@@ -79,9 +79,21 @@ io.on('connection', (socket) => {
                                 "timestamp", message.timestamp.toString(),
                                 "message", message.msg);
         const chatLength = await redis.xlen("chat");
-        // trim chat stream to 200 messages
-        if (chatLength > 200) {
-            await redis.xtrim("chat", "MAXLEN", 200);
+        // check if the user in the user-socket-map
+        const exists = await redis.hexists("user-socket-map", message.user);
+        if (exists === 1) {
+            const chatLength = await redis.xlen("chat");
+            // trim chat stream to 200 messages
+            if (chatLength > 200) {
+                await redis.xtrim("chat", "MAXLEN", 200);
+            }
+        }
+        else {
+            // if not, send warning message to the user
+            socket.emit('new_message', 
+                        {user: "System", 
+                         timestamp: new Date().toDateString(), 
+                         msg: "[WARNING] Please sign in first"});
         }
     });
 
