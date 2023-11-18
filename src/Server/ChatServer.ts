@@ -3,6 +3,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
 import { PortsGlobal } from '../ServerDataDefinitions';
+import { send } from 'process';
 
 interface MessageProp {
     user: string,
@@ -55,8 +56,17 @@ io.on('connection', (socket) => {
             socket.emit('sign_in_response', {user: userName, status: 200});
             console.log(`user ${userName} connected: ${socket.id}}`);
         }
+        await sendOnlineUsers();
         
     });
+
+    // -------------------- Send Online Users -------------------- //
+    async function sendOnlineUsers() {
+        const users = await redis!.hkeys("user-socket-map");
+        io.emit('online_users', users);
+    }   
+    // setInterval(() => sendOnlineUsers(), 10);
+    
 
     // -------------------- Message Publisher -------------------- //
     socket.on('send_message', async (message: MessageProp) => {
@@ -173,6 +183,7 @@ io.on('connection', (socket) => {
         pub!.quit();
         sub = null;
         pub = null;
+        await sendOnlineUsers();
     });
 
     async function getUsernameBySocketId(socketId: string): Promise<string | null> {

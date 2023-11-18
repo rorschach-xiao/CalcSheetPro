@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import ChatClient from '../Engine/ChatClient';
 import './ChatPad.css';
+import { get } from 'http';
 
 interface SignInResponse {
   user: string,
@@ -30,6 +31,10 @@ function ChatPad({userName, chatClient, show, handleToggle, onSignInResponse}: C
   const [chatLog, setChatLog] = useState<ClientMessageProp[]>([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [newMessageFlag, setNewMessageFlag] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+  const [usersWithColor, setUsersWithColor] = useState(new Map<string, string>());
+
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const topRef = useRef<HTMLDivElement | null>(null);
   // const [newMessagesCount, setNewMessagesCount] = useState(0);
@@ -66,9 +71,22 @@ function ChatPad({userName, chatClient, show, handleToggle, onSignInResponse}: C
     }
   };
 
+  const onOnlineUsersReceived = (users: string[]) => {
+    setOnlineUsers(users);
+    // 生成用户颜色
+    let usersWithColor = new Map<string, string>();
+    for (let i = 0; i < users.length; i++) {
+      if (usersWithColor.has(users[i])) {
+        continue;
+      }
+      usersWithColor.set(users[i], getDarkRandomColor());
+    }
+    setUsersWithColor(usersWithColor);
+  };
+
   // initialize the chat client connenction
   useEffect(() => {
-    chatClient.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse);
+    chatClient.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
     setChatLog([]);
     return () => {
       chatClient.disconnect();
@@ -161,25 +179,82 @@ function ChatPad({userName, chatClient, show, handleToggle, onSignInResponse}: C
     // }
   }
 
+  // get a random color for avatar
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+  
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  function isLightColor(color: string) {
+    function hexToRgb(hex: string) {
+      let r = parseInt(hex.slice(1, 3), 16);
+      let g = parseInt(hex.slice(3, 5), 16);
+      let b = parseInt(hex.slice(5, 7), 16);
+    
+      return [r, g, b]; 
+    }
+
+    let rgb = hexToRgb(color);
+  
+    let relativeLuminance = (rgb[0] * 0.2126) + (rgb[1] * 0.7152) + (rgb[2] * 0.0722);
+  
+    let threshold = 0.8;
+  
+    return relativeLuminance < threshold;
+  }
+
+  function getDarkRandomColor() {
+    let color;
+    do {
+      color = getRandomColor(); 
+    } while (isLightColor(color)) 
+  
+    return color;
+  }
+
+
+
+  function getOnlineUsersScope() {
+    return (<div className={`online-users-container ${isSidebarOpen ? '' : 'close'}`}>
+              <div className='online-users-title'>Online Users</div>
+              <div className='online-users'>
+           
+                {onlineUsers.map((user, index) => (
+                  <div key={index} className='online-user'>
+                    <div className='avatar' style={{backgroundColor: usersWithColor.get(user)}}>{user[0]}</div>
+                    {user}
+                  </div>
+                ))}
+              </div>
+            </div>);
+  }
   return (
-    <div className={`chat-container ${isSidebarOpen ? '' : 'close'}`}>
-      {getChatTopContainer()}
-      <div className={`chat-window ${isSidebarOpen ? '' : 'close'}`}>
-        {chatLog.map((msgObj, index) => (
-          getChatScopes(msgObj, index)
-        ))}
+      <div className={`chat-container ${isSidebarOpen ? '' : 'close'}`}>
+        {getChatTopContainer()}
+        {getOnlineUsersScope()}
+          <div className={`chat-window ${isSidebarOpen ? '' : 'close'}`}>
+            {chatLog.map((msgObj, index) => (
+              getChatScopes(msgObj, index)
+            ))}
+          </div>
+          {getOnlineUsersScope()}
+
+    
+        <div className={`chat-input-container ${isSidebarOpen ? '' : 'close'}`}>
+          <input
+            placeholder="Enter a message"
+            type="text"
+            id="inputMessage"
+            className='messageInput'
+          />
+          <button onClick={handleSendMessage} className="sendButton">Send</button>
+        </div>
       </div>
-      
-      <div className={`chat-input-container ${isSidebarOpen ? '' : 'close'}`}>
-        <input
-          placeholder="Enter a message"
-          type="text"
-          id="inputMessage"
-          className='messageInput'
-        />
-        <button onClick={handleSendMessage} className="sendButton">Send</button>
-      </div>
-    </div>
+
   );
 };
 

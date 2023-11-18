@@ -29,7 +29,7 @@ class ChatClient {
     }
     
     connect(onMessageReceived: (msg: ClientMessageProp) => void, onHistoryMessageReceived: (msgs: ClientMessageProp[]) => void, 
-            onSignInResponse: (response: SignInResponse) => void) {
+            onSignInResponse: (response: SignInResponse) => void, onOnlineUsersReceived: (users: string[]) => void) {
         this._socket = io(this._serverURL, {
             reconnection: true, 
             reconnectionAttempts: 5, 
@@ -51,6 +51,10 @@ class ChatClient {
             // });
             onHistoryMessageReceived(messageObjs);
         });
+        this._socket.on('online_users', (users: string[]) => {
+            onOnlineUsersReceived(users);
+        });
+        
         this._socket.on('connect', () => {
             console.log(`id: ${this._socket.id}`);
         });
@@ -68,7 +72,6 @@ class ChatClient {
             alert("Please connect to the server first!");
             return;
         }
-        
     }
 
     sendMessage(message: string) {

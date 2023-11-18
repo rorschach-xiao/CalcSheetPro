@@ -13,16 +13,54 @@
 }
 
 .chat-container {
-    width: 400px;  
+    width: 500px;  
     height: 100%; 
     border: 1px solid #ccc;
-    display: flex;
+    display: grid;
+    grid-template-areas: 
+        "chat-top online-users"
+        "chat-window online-users"
+        "chat-input online-users";
+    grid-template-columns: 3fr 1fr;
     flex-direction: column;
     overflow: hidden; /* 确保内部内容超出时隐藏 */
     font-family: 'Arial', sans-serif; /* 使用简洁的无衬线字体 */
     font-size: 14px; /* 设定字体大小 */
     color: #333; /* 深色文本 */
     background-color: #f9f9f9; 
+}
+
+/*************** online users container ************/
+
+.online-users-container {
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    grid-area: online-users;
+}
+  
+.online-users-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+  
+.online-user {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  justify-items: center;
+  
+  align-items: center; 
+  margin-bottom: 5px;
+  font-family: "cursive"; 
+}
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;  
+  font: small-caps bold 24px/1 "cursive";
 }
 
 /*************** chat top container ************/
@@ -61,10 +99,10 @@
 
 
 /*************** chat window container ************/
+
 .chat-window {
-    flex: 1;
-    overflow-y: auto; /* 消息多时可滚动 */
     padding: 10px;
+    overflow-y: auto; /* 消息多时可滚动 */
     border-bottom: 1px solid #ccc;
     padding: 5px 10px; /* 消息内边距 */
     background-color: #f7f4f4; /* 消息背景颜色 */
