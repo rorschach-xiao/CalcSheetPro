@@ -71,6 +71,41 @@ describe('RedisDatabase', () => {
     });
 
 
+    // test reset the message history
+    test('reset the message history', async () => {
+        const redis = new Redis();
+        await redis.xtrim("chat", "MAXLEN", 0);
+
+        for (let i = 0; i < 40; i++) {
+            await redis.xadd("chat", "*", "username", 'test',
+                "timestamp", '2022-01-01T00:00:00.000Z',
+                "message", 'test message ' + i);
+        }
+        const chatLength = await redis.xlen("chat");
+        expect(chatLength).toBe(40);
+
+        await redis.xtrim("chat", "MAXLEN", 0);
+        const newChatLength = await redis.xlen("chat");
+        expect(newChatLength).toBe(0);
+    });
+
+    // test get more than 200 messages
+    test('get more than 200 messages', async () => {
+        const redis = new Redis();
+        await redis.xtrim("chat", "MAXLEN", 0);
+
+        for (let i = 0; i < 300; i++) {
+            await redis.xadd("chat", "*", "username", 'test',
+                "timestamp", '2022-01-01T00:00:00.000Z',
+                "message", 'test message ' + i);
+        }
+
+        const chatLength = await redis.xlen("chat");
+        expect(chatLength).toBe(300);
+
+        const messages = await redis.xrevrange("chat", "+", "-", "COUNT", "300");
+        expect(messages.length).toBe(300);
+    });
 
 
 });
