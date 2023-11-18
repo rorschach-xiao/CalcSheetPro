@@ -1,12 +1,140 @@
 .create-sheet-label {
     margin-right: 10px;
     font-family: "Gill Sans", sans-serif; 
-    font-size: 16px;
+    font-size: 20px;
+    background-color:  #ffffff00;
+    height: 100%;
+    width: 100%;
+    border: rgba(0, 0, 0, 0);
+    border-radius: 3px;
 }
 
-.container {
-    display: flex; 
+.nav-botton-select {
+    background-color: #282c34;
+    height: 100%;
+    width: 100%;
 }
-.div1, .div2 {
-    flex: 1; 
+
+
+.bar-container {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100%;
+    background-color:  #f0f0f0;
+    color: #020202;
+    width: 100%;
+    border-bottom: #020202;
+    grid-area: head;
 }
+
+.login-user {
+    position: relative;
+    align-items: right;
+    justify-content: right;
+    color: #020202;
+    width: 100%;
+    height: 100%;
+}
+.login-user-span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "cursive"; 
+    font: small-caps bold 24px/1 "cursive";
+    font-size: 20px;
+}
+
+.login-modal {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fbfafa;
+    padding: 20px;
+    z-index: 1000; 
+}
+.create-sheet-modal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fbfafa;
+  padding: 20px;
+  z-index: 1000; 
+}
+  
+.modal-content {
+  text-align: center;
+  display: grid;
+  grid-template-areas:
+    "a a"
+    "b b"
+    "c d";
+  color: #020202;
+  
+}
+.modal-content > label {
+    grid-area: a;
+    font: small-caps bold 15px/1 "cursive";
+}
+.modal-content > input {
+    grid-area: b;
+}
+  
+
+.img-header {
+    width: 100%;
+    height: 100%;
+}
+
+.sheet {
+    width: 100%;
+    max-height: 100%;
+    min-height: 80%;
+    grid-area: sheet;
+}
+
+.page {
+    display: grid;
+    grid-template-areas:
+    "head head"
+    "sheet chat"
+    "sheet chat";
+    grid-template-rows: 80px 1fr;
+    grid-template-columns: 3fr auto;
+    height: 100%;
+    width: 100%;
+}
+
+.chat {
+    grid-area: chat;
+    max-height: 60vh;
+}
+
+.notification-badge {
+  position: relative; 
+  display: inline-block;
+}
+
+.notification-badge > .badge {
+  position: absolute;
+  top: 7%;
+  left: 70%;
+  background-color: rgb(240, 25, 25);
+  color: rgb(252, 249, 249);
+  border-radius: 50%;
+  padding: 3px 5px;
+  font-size: 8px;
+  z-index: 1000;
+}
+
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    height: 100%;
+}
+
