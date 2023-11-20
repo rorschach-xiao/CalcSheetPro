@@ -102,45 +102,67 @@ async function testGetMessages(testName: string, expectedCount: number) {
 }
 
 async function runTest() {
-    const chatClient = new ChatClient("testUser");
-    chatClient.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    const chatClient1 = new ChatClient("testUser1");
+    chatClient1.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient1.signIn("testUser1");
     console.log("Running test");
     
     
     // send 1 message
     await resetDatabase();
-    await testSendMessages(1, chatClient);
+    await testSendMessages(1, chatClient1);
     await testGetMessages("send 1 message", 1);
-    
+    chatClient1.disconnect();
+
 
     // send 10 messages
+    const chatClient2 = new ChatClient("testUser2");
+    chatClient2.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient2.signIn("testUser2");
     await resetDatabase();
-    await testSendMessages(10, chatClient);
+    await testSendMessages(10, chatClient2);
     await testGetMessages("send 10 messages", 10);
+    chatClient2.disconnect();
+
 
     // send 20 messages
+    const chatClient3 = new ChatClient("testUser3");
+    chatClient3.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient3.signIn("testUser3");
     await resetDatabase();
-    await testSendMessages(20, chatClient);
+    await testSendMessages(20, chatClient3);
     await testGetMessages("send 20 messages", 20);
+    chatClient3.disconnect();
+
 
     // send 100 messages
+    const chatClient4 = new ChatClient("testUser4");
+    chatClient4.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient4.signIn("testUser4");
     await resetDatabase();
-    await testSendMessages(100, chatClient);
+    await testSendMessages(100, chatClient4);
     await testGetMessages("send 100 messages", 100);
+    chatClient4.disconnect();
 
     // send 200 messages
+    const chatClient5 = new ChatClient("testUser5");
+    chatClient5.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient5.signIn("testUser5");
     await resetDatabase();
-    await testSendMessages(200, chatClient);
+    await testSendMessages(200, chatClient5);
     await testGetMessages("send 200 messages", 200);
+    chatClient5.disconnect();
 
     // send 201 messages
+    const chatClient6 = new ChatClient("testUser6");
+    chatClient6.connect(onMessageReceived, onHistoryMessageReceived, onSignInResponse, onOnlineUsersReceived);
+    chatClient6.signIn("testUser6");
     await resetDatabase();
-    await testSendMessages(201, chatClient);
+    await testSendMessages(201, chatClient6);
     await testGetMessages("send 201 messages", 200);
+    chatClient6.disconnect();
 
-    chatClient.disconnect();
     socket.disconnect();
-
 }
 
 runTest();
