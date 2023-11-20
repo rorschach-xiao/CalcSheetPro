@@ -42,6 +42,7 @@
     "test-server": "ts-node ./src/Server/DocumentServerTester.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-chat-server": "ts-node ./src/Server/ChatServerTester.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

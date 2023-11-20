@@ -14,6 +14,7 @@ interface MessageProp {
 
 
 const app = express();
+app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {serveClient: false, cors: {
     origin: "*",
@@ -31,6 +32,12 @@ const redis = new Redis({
     },
 });
 
+// -------------------- Reset -------------------- //
+app.get('/reset', async (req, res) => {
+    await redis.flushall();
+    res.send('Reset');
+});
+
 io.on('connection', (socket) => {
 
     let sub: Redis| null = new Redis();
@@ -40,6 +47,24 @@ io.on('connection', (socket) => {
     let reachEnd: boolean = false;
     // send 20 history messages by default
     sendHistoryMessage();
+
+
+    // -------------------- Database Size -------------------- //
+    socket.on('db_size', async () => {
+        try {
+            
+            const dbSize = await redis.xlen("chat");
+
+           
+            socket.emit('db_size_response', { size: dbSize });
+        } catch (error) {
+            console.error("Error getting database size:", error);
+            
+            socket.emit('db_size_response', { error: "Error getting database size" });
+        }
+    });
+
+
 
     // -------------------- Sign In -------------------- //
     socket.on('sign_in', async (userName: string) => {
