@@ -126,5 +126,12 @@
       "command": "npx jest --coverage",
       "cwd": "${workspaceFolder}"
     },
+    {
+      "type": "node-terminal",
+      "name": "Test Chat Server",
+      "request": "launch",
+      "command": "npm run test-chat-server",
+      "cwd": "${workspaceFolder}"
+    },
   ]
 }
