@@ -114,6 +114,7 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 轻微的阴影增加层次感 */
     text-align: left;
     grid-area: chat-window;
+    max-height: 400px;
 }
 
 .chat-window.close {
