@@ -112,7 +112,6 @@
 
 .chat {
     grid-area: chat;
-    max-height: 60vh;
     position: absolute;
     right: 0;
     top: 80px; 
@@ -120,7 +119,7 @@
 }
 
 .whiteboard {
-    width: 30%;
+    width: 500px;
     height: 80%;
     position: absolute;
     left: 0;
