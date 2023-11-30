@@ -327,7 +327,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           {showChatWindow()}
           {showLoginUser()}
         </div>
-      
+      <div className="chat">
+        <ChatPad userName={userName} 
+                 chatClient={chatClient} 
+                 show={showChat} 
+                 handleToggle={handleToggle} 
+                 onSignInResponse={onSignInResponse}></ChatPad>
+      </div>
+      <div className={`whiteboard ${showWhiteBoard ? "": "close"}`}>
+        <WhiteBoard isOpen={showWhiteBoard}></WhiteBoard>
+      </div>
       <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
         <Status statusString={statusString}></Status>
@@ -339,16 +348,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           onCommandButtonClick={onCommandButtonClick}
           currentlyEditing={currentlyEditing}></KeyPad>
       </div>
-      <div className="chat">
-        <ChatPad userName={userName} 
-                 chatClient={chatClient} 
-                 show={showChat} 
-                 handleToggle={handleToggle} 
-                 onSignInResponse={onSignInResponse}></ChatPad>
-      </div>
-      <div className={`whiteboard ${showWhiteBoard ? "": "close"}`}>
-        <WhiteBoard isOpen={showWhiteBoard}></WhiteBoard>
-      </div>
+      
     </div>
   )
 };

@@ -17,6 +17,9 @@
 
 
 .bar-container {
+    position: absolute;
+    top: 0;
+    height: 80px;
     display: grid;
     grid-template-columns: 0.5fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
     grid-template-rows: 100%;
@@ -110,9 +113,10 @@
 .chat {
     grid-area: chat;
     max-height: 60vh;
-    position: fixed;
+    position: absolute;
     right: 0;
     top: 80px; 
+    z-index: 1000;
 }
 
 .whiteboard {
@@ -120,7 +124,7 @@
     height: 80%;
     position: absolute;
     left: 0;
-    top: 10%;  
+    top: 80px;  
     z-index: 1000;
     display: grid;
     grid-template-areas:
