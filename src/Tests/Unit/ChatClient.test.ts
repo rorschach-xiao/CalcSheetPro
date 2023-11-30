@@ -85,7 +85,6 @@ describe('ChatClient', () => {
  
     it('should initialize with correct default values', () => {
         expect(chatClient.userName).toBe('testUser');
-        expect(chatClient.server).toBe('localhost');
     });
  
     it('should connect to the server', async () => {

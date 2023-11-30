@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import Redis from 'ioredis';
-import { PortsGlobal } from '../ServerDataDefinitions';
+import { PortsGlobal, RENDER_REDIS_URL } from '../ServerDataDefinitions';
 
 // connnect to socket.io
 const app = express();
@@ -13,9 +13,10 @@ const io = new Server(server, {serveClient: false, cors: {
     methods: ["GET", "POST"]
   }
 });
+const redisURL = `${RENDER_REDIS_URL}:${PortsGlobal.redisPort}`;
 
 // connnect to redis
-const redis = new Redis({
+const redis = new Redis(redisURL, {
     // This is the default value of `retryStrategy`
     retryStrategy(times) {
       const delay = Math.min(times * 50, 2000);

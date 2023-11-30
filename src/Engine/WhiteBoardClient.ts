@@ -56,8 +56,8 @@ class WhiteboardClient {
     private _rightMouseDown: boolean = false;
 
     constructor() {
-        this._serverURL = `${this._localServerURL}:${this._serverPort}`;
-        this._server = 'localhost';
+        this._serverURL = `${this._renderServerURL}`;
+        this._server = 'renderhost';
     }
     // 初始化画板
     init(canvasRef: React.MutableRefObject<null>, setCursor: (cursor: string|null) => void) {
