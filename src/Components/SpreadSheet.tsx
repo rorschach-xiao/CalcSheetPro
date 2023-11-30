@@ -15,6 +15,7 @@ import "./SpreadSheet.css";
 import ChatClient from "../Engine/ChatClient";
 import Image from "../Images/logo.png";
 import SheetComponent from "./SheetComponent";
+import WhiteBoard from "./WhiteBoard";
 
 interface SpreadSheetProps {
   documentName: string;
@@ -48,6 +49,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
   const [showLogin, setShowLogin] = useState(false);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [showWhiteBoard, setShowWhiteBoard] = useState(false);
   const [newMessagesCount, setNewMessagesCount] = useState(0);
 
 
@@ -127,6 +129,16 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           }
         }>CHAT</button>
         {newMessagesCount > 0 && !showChat && <span className="badge">{newMessagesCount}</span>}
+    </nav>
+  }
+
+  function showWhiteBoardWindow() {
+    return <nav> 
+      <button className={`create-sheet-label `} onClick={
+        () => {
+            setShowWhiteBoard(!showWhiteBoard)
+          }
+        }>WHITEBOARD</button>
     </nav>
   }
 
@@ -307,14 +319,15 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     <div className="page">
       <div className="bar-container">
           <img className="img-header" src={Image} alt="logo"/>
+          {showWhiteBoardWindow()}
           <FileSelector fetchFiles={getFiles} onFileSelect={selectFiles} userName={userName} currentFile={fileName}/>
           {createNewSheet()}
           <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
           {getUserLogin()}
           {showChatWindow()}
           {showLoginUser()}
-          
         </div>
+      
       <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
         <Status statusString={statusString}></Status>
@@ -332,6 +345,9 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
                  show={showChat} 
                  handleToggle={handleToggle} 
                  onSignInResponse={onSignInResponse}></ChatPad>
+      </div>
+      <div className={`whiteboard ${showWhiteBoard ? "": "close"}`}>
+        <WhiteBoard isOpen={showWhiteBoard}></WhiteBoard>
       </div>
     </div>
   )
