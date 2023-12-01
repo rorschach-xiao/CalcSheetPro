@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import WhiteBoardClient from '../Engine/WhiteBoardClient';
 import './WhiteBoard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
+
 
 const whiteBoardClient = new WhiteBoardClient();
 interface WhiteBoardProps {
@@ -29,6 +32,11 @@ function WhiteBoard({isOpen}: WhiteBoardProps) {
       setSelectedColor(color);
       whiteBoardClient.setColor(color);
     };
+
+    // 点击清除按钮处理函数
+    const handleClear = () => {
+      whiteBoardClient.clear();
+    };
     return (
     <Fragment>
         {/* canvas */}
@@ -43,7 +51,9 @@ function WhiteBoard({isOpen}: WhiteBoardProps) {
             <div className={colorClass('yellow')} onClick={() => selectColor('yellow')}></div>
           </div>
           <div className="btn-panel">
-            <button onClick={() => whiteBoardClient.clear()}>Clear</button>
+            <button onClick={handleClear}>
+              <FontAwesomeIcon icon={faRotateRight} />
+            </button>
           </div>
         </div>
      </Fragment>
