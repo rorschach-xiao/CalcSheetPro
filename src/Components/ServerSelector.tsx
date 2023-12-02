@@ -1,5 +1,5 @@
-import "./ServerSelector.css";
 
+import "./ServerSelector.css";
 // define the props for ServerSelector
 
 interface ServerSelectorProps {
@@ -25,13 +25,37 @@ function ServerSelector({ serverSelector, serverSelected }: ServerSelectorProps)
         serverSelector(buttonName);
     } // onButtonClick
 
+    function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        serverSelector(e.target.value);
 
+    }
+    function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+        serverSelector(e.currentTarget.value);
+    }
     return (
-        <div>
-            <button onClick={onButtonClick}>localhost</button>
-            <button onClick={onButtonClick}>renderhost</button>
-            <label>current server: {serverSelected}</label>
+        // <nav>
+        //     {/* <button onClick={onButtonClick}>localhost</button>
+        //     <button onClick={onButtonClick}>renderhost</button> */}
+        //     <select onChange={handleChange}>
+        //         <option value="">SERVER</option>
+        //         <option key="localhost" value="localhost">localhost</option>
+        //         <option key="renderhost" value="renderhost">renderhost</option>
+            
+        //     </select>
+        //     {/* current server: {serverSelected} */}
+        // </nav>
+        <nav>
+        <div className="dropdown">
+            <div className="dropdown-trigger">SERVER</div>
+            <div className="dropdown-menu">
+                <button key="localhost" value="localhost" onClick={handleButtonClick} 
+                className={`${serverSelected=='localhost'?"selected":"not-selected"}`}>localhost</button>
+                <button key="renderhost" value="renderhost" onClick={handleButtonClick}
+                className={`${serverSelected=='renderhost'?"selected":"not-selected"}`}>renderhost</button>
+            </div>
         </div>
+        
+    </nav>
     )
 }
 
