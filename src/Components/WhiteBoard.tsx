@@ -18,6 +18,7 @@ function WhiteBoard({isOpen, handleWhiteBoardToggle}: WhiteBoardProps) {
 
     // 启动 socket 连接，初始化共享画板组件
     useEffect(() => {
+      console.log("Initializing canvas...");
       whiteBoardClient.init(canvasRef, setCursor)
     }, [isOpen]);
 
@@ -61,8 +62,7 @@ function WhiteBoard({isOpen, handleWhiteBoardToggle}: WhiteBoardProps) {
 
     return (
 
-        
-        <Fragment>
+          <Fragment>
             {getWhiteBoardTopContainer()}
             {/* canvas */}
             <canvas ref={canvasRef} id="canvas" height="500" width="500"></canvas>
@@ -81,7 +81,8 @@ function WhiteBoard({isOpen, handleWhiteBoardToggle}: WhiteBoardProps) {
                 </button>
               </div>
             </div>
-        </Fragment>
+          </Fragment>
+
     );
 }
 export default WhiteBoard;

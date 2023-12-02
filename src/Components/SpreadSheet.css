@@ -142,6 +142,7 @@
     grid-area: wbcanvas;
 }
 
+
 .whiteboard.close{
     display: none;
     width: 0px;
