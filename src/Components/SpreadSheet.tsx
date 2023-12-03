@@ -331,7 +331,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           {getUserLogin()}
           {showChatWindow()}
           {showLoginUser()}
-        </div>
+      </div>
       <div className="chat">
         <ChatPad userName={userName} 
                  chatClient={chatClient} 
