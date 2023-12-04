@@ -51,7 +51,7 @@
     },
     {
       "type": "node-terminal",
-      "name": "Start Chat Server",
+      "name": "Start All Server",
       "request": "launch",
       "command": "npm run start-all-server",
       "cwd": "${workspaceFolder}"
