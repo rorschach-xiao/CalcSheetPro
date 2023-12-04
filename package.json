@@ -48,6 +48,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-chat-server": "ts-node ./src/Server/ChatServerTester.ts",
+    "test-whiteboard-server": "ts-node ./src/Server/WhiteBoardServerTester.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

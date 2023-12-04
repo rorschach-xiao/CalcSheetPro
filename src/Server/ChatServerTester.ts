@@ -11,7 +11,7 @@ interface ClientMessageProp {
     user: string,
     msg: string
     timestamp: string
-  }
+    }
 
 const vancouverTimezone = "America/Vancouver";
 const socket = io(baseURL);
@@ -87,7 +87,7 @@ async function testGetMessages(testName: string, expectedCount: number) {
 
     let numberOfMessages : number = 0;
 
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 300));
     numberOfMessages = await getDatabaseSize();
 
     console.log('*'.repeat(80) + '\n');

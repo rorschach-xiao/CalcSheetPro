@@ -140,5 +140,12 @@
       "command": "npm run test-chat-server",
       "cwd": "${workspaceFolder}"
     },
+    {
+      "type": "node-terminal",
+      "name": "Test WhiteBoard Server",
+      "request": "launch",
+      "command": "npm run test-whiteboard-server",
+      "cwd": "${workspaceFolder}"
+    },
   ]
 }
