@@ -127,10 +127,13 @@
     z-index: 1000;
     display: grid;
     grid-template-areas:
+    "wbtop"
     "wbcanvas"
     "wbbottom";
-    grid-template-rows: 80% 40px;
+    grid-template-rows: 40px 80% 40px;
 }
+
+
 .whiteboard > canvas {
     border: 1px solid black;
     background-color: white;
@@ -148,29 +151,29 @@
 }
 
 
+
 .notification-badge {
-  position: relative; 
-  display: inline-block;
-}
-
-.notification-badge > .badge {
-  position: absolute;
-  top: 7%;
-  left: 70%;
-  background-color: rgb(240, 25, 25);
-  color: rgb(252, 249, 249);
-  border-radius: 50%;
-  padding: 3px 5px;
-  font-size: 8px;
-  z-index: 1000;
-}
-
-
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    height: 100%;
-}
-
+    position: relative; 
+    display: inline-block;
+  }
+  
+  .notification-badge > .badge {
+    position: absolute;
+    top: 7%;
+    left: 70%;
+    background-color: rgb(240, 25, 25);
+    color: rgb(252, 249, 249);
+    border-radius: 50%;
+    padding: 3px 5px;
+    font-size: 8px;
+    z-index: 1000;
+  }
+  
+  
+  nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f0f0f0;
+      height: 100%;
+  }
