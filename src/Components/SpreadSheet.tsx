@@ -315,6 +315,10 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
     }
   }
 
+  const handleWhiteBoardToggle: () => void = () => {
+    setShowWhiteBoard(false);
+  };
+
   return (
     <div className="page">
       <div className="bar-container">
@@ -326,7 +330,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
           {getUserLogin()}
           {showChatWindow()}
           {showLoginUser()}
-        </div>
+      </div>
       <div className="chat">
         <ChatPad userName={userName} 
                  chatClient={chatClient} 
@@ -335,7 +339,7 @@ function SpreadSheet({ documentName }: SpreadSheetProps) {
                  onSignInResponse={onSignInResponse}></ChatPad>
       </div>
       <div className={`whiteboard ${showWhiteBoard ? "": "close"}`}>
-        <WhiteBoard isOpen={showWhiteBoard}></WhiteBoard>
+        <WhiteBoard isOpen={showWhiteBoard} handleWhiteBoardToggle={handleWhiteBoardToggle}></WhiteBoard>
       </div>
       <div className="sheet">
         <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
